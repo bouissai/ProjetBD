@@ -1,0 +1,94 @@
+-- THIS FILE IS GENERATED. DON'T TOUCH IT!!!
+
+model M
+
+enum Statut {
+    vplus,
+    vmoins,
+    vnul
+}
+
+enum Etat {
+    hs,
+    ok
+}
+
+enum Modele {
+    vtt,
+    btwin,
+    peugeot,
+    look
+}
+
+enum Sexe {
+    femme,
+    homme
+}
+
+class Station
+    attributes
+        adresse : String
+        statut : Statut
+end
+
+class Bornette
+    attributes
+        numeroBorn : Number
+        etat : Etat
+end
+
+class Velo
+    attributes
+        numeroVelo : Number
+        modele : Modele
+        dateMiseEnService : String
+        etat : Etat
+        prix : Number
+end
+
+class Client
+    attributes
+        numeroCB : Number
+        codeSecret : Number
+end
+
+class Abonne < Client
+    attributes
+        nom : String
+        prenom : String
+        dateNaissance : String
+        sexe : Sexe
+        adresse : String
+        dateAbonnement : String
+        tempsCredite : Number
+end
+
+class Location
+    attributes
+        dateLocation : String
+end
+
+association Contient
+    between
+        Station[1] role station
+        Bornette[*] role bornettes
+end
+
+association Propose
+    between
+        Bornette[1] role bornette
+        Velo[0..1] role velo
+end
+
+association EstLoue
+    between
+        Velo[1] role velo
+        Location[0..*] role locations
+end
+
+association Loue
+    between
+        Client[1] role client
+        Location[0..*] role locations
+end
+
