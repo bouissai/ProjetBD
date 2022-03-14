@@ -1,18 +1,27 @@
-package fr.uga.im2ag.l3.miage.db.model;
+package model;
 
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
+import java.util.Date;
 
+@Entity
 public class Abonne extends Client{
 
     private String nom ;
     private String prenom ;
     private Date dateNaissance ;
-    private JAVA.Sexe sexe ;
+    private Sexe sexe ;
     private String adresse ;
     private Date dateAbonnement ;
 
-    private List<Location> locations;
+    //private List<Location> locations;
+
+    public Abonne(){
+        super();
+    }
 
     public Abonne(int numeroCB, int codeSecret, String nom, String prenom, Date dateNaissance, Sexe sexe, String adresse, Date dateAbonnement) {
         super(numeroCB, codeSecret);
@@ -48,11 +57,11 @@ public class Abonne extends Client{
         this.dateNaissance = dateNaissance;
     }
 
-    public JAVA.Sexe getSexe() {
+    public Sexe getSexe() {
         return sexe;
     }
 
-    public void setSexe(JAVA.Sexe sexe) {
+    public void setSexe(Sexe sexe) {
         this.sexe = sexe;
     }
 

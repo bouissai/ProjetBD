@@ -1,11 +1,14 @@
-package fr.uga.im2ag.l3.miage.db.model;
+package model;
 
 
-import javax.annotation.processing.Generated;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
-
+@Entity
 public class Station {
-
+    @Id
     private Long id ;
 
     private String adresse ;

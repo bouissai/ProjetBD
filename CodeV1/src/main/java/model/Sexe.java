@@ -1,4 +1,4 @@
-package fr.uga.im2ag.l3.miage.db.model;
+package model;
 
 public enum Sexe {
     FEMME,
