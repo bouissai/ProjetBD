@@ -13,16 +13,16 @@ enum Etat {
     ok
 }
 
-enum Modele {
-    vtt,
-    btwin,
-    peugeot,
-    look
-}
-
 enum Sexe {
     femme,
     homme
+}
+
+enum Marque {
+    vtt,
+    ktm,
+    peugeot,
+    btwin
 }
 
 class Station
@@ -40,10 +40,8 @@ end
 class Velo
     attributes
         numeroVelo : Number
-        modele : Modele
         dateMiseEnService : String
         etat : Etat
-        prix : Number
 end
 
 class Client
@@ -66,6 +64,16 @@ end
 class Location
     attributes
         dateLocation : String
+        dateRendu : String
+end
+
+class Modele
+    attributes
+        marque : Marque
+        cout : Double
+end
+
+class NonAbonne < Client
 end
 
 association Contient
@@ -74,7 +82,7 @@ association Contient
         Bornette[*] role bornettes
 end
 
-association Propose
+association ProposeDeLouer
     between
         Bornette[1] role bornette
         Velo[0..1] role velo
@@ -82,8 +90,14 @@ end
 
 association EstLoue
     between
-        Velo[1] role velo
+        Velo[1..*] role velos
         Location[0..*] role locations
+end
+
+association EstDeModele
+    between
+        Velo[*] role velos
+        Modele[1] role modele
 end
 
 association Loue

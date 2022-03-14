@@ -4192,9 +4192,9 @@
 										"$ref": "AAAAAAF/iKHUK6dFHsw="
 									},
 									"font": "Arial;13;0",
-									"left": 755,
+									"left": 751,
 									"top": 189,
-									"width": 23.84814453125,
+									"width": 30.34814453125,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -4202,7 +4202,7 @@
 										"$ref": "AAAAAAF/iKHULKdIRwQ="
 									},
 									"edgePosition": 2,
-									"text": "velo"
+									"text": "velos"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -4952,7 +4952,7 @@
 								"_parent": {
 									"$ref": "AAAAAAF/iKHUKqdE6Hg="
 								},
-								"name": "velo",
+								"name": "velos",
 								"reference": {
 									"$ref": "AAAAAAF/ZSyDJZvTJa8="
 								},
