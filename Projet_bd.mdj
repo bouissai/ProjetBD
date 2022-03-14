@@ -1070,7 +1070,7 @@
 											"fillColor": "#f6ec9f",
 											"font": "Arial;13;0",
 											"left": 480,
-											"top": -96,
+											"top": -64,
 											"height": 13
 										},
 										{
@@ -1083,7 +1083,7 @@
 											"fillColor": "#f6ec9f",
 											"font": "Arial;13;1",
 											"left": 677,
-											"top": 63,
+											"top": 79,
 											"width": 154.2734375,
 											"height": 13,
 											"text": "Velo"
@@ -1099,7 +1099,7 @@
 											"fillColor": "#f6ec9f",
 											"font": "Arial;13;0",
 											"left": 480,
-											"top": -96,
+											"top": -64,
 											"width": 73.67724609375,
 											"height": 13,
 											"text": "(from Model)"
@@ -1115,7 +1115,7 @@
 											"fillColor": "#f6ec9f",
 											"font": "Arial;13;0",
 											"left": 480,
-											"top": -96,
+											"top": -64,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
@@ -1124,7 +1124,7 @@
 									"fillColor": "#f6ec9f",
 									"font": "Arial;13;0",
 									"left": 672,
-									"top": 56,
+									"top": 72,
 									"width": 164.2734375,
 									"height": 25,
 									"stereotypeLabel": {
@@ -1163,29 +1163,10 @@
 											"fillColor": "#f6ec9f",
 											"font": "Arial;13;0",
 											"left": 677,
-											"top": 86,
+											"top": 102,
 											"width": 154.2734375,
 											"height": 13,
 											"text": "numeroVelo: Number",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAF/ZS41VJwTATg=",
-											"_parent": {
-												"$ref": "AAAAAAF/ZSyDJpvbDHg="
-											},
-											"model": {
-												"$ref": "AAAAAAF/ZS41SpwQjj4="
-											},
-											"lineColor": "#450f0f",
-											"fillColor": "#f6ec9f",
-											"font": "Arial;13;0",
-											"left": 677,
-											"top": 101,
-											"width": 154.2734375,
-											"height": 13,
-											"text": "modele: Modele",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1201,7 +1182,7 @@
 											"fillColor": "#f6ec9f",
 											"font": "Arial;13;0",
 											"left": 677,
-											"top": 116,
+											"top": 117,
 											"width": 154.2734375,
 											"height": 13,
 											"text": "dateMiseEnService: Date",
@@ -1220,29 +1201,10 @@
 											"fillColor": "#f6ec9f",
 											"font": "Arial;13;0",
 											"left": 677,
-											"top": 131,
+											"top": 132,
 											"width": 154.2734375,
 											"height": 13,
 											"text": "etat: Etat",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAF/ZS8hApwrEtg=",
-											"_parent": {
-												"$ref": "AAAAAAF/ZSyDJpvbDHg="
-											},
-											"model": {
-												"$ref": "AAAAAAF/ZS8g/JwoBNU="
-											},
-											"lineColor": "#450f0f",
-											"fillColor": "#f6ec9f",
-											"font": "Arial;13;0",
-											"left": 677,
-											"top": 146,
-											"width": 154.2734375,
-											"height": 13,
-											"text": "prix: Number",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1250,9 +1212,9 @@
 									"fillColor": "#f6ec9f",
 									"font": "Arial;13;0",
 									"left": 672,
-									"top": 81,
+									"top": 97,
 									"width": 164.2734375,
-									"height": 83
+									"height": 53
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -1268,7 +1230,7 @@
 									"fillColor": "#f6ec9f",
 									"font": "Arial;13;0",
 									"left": 672,
-									"top": 164,
+									"top": 180,
 									"width": 164.2734375,
 									"height": 10
 								},
@@ -1286,7 +1248,7 @@
 									"fillColor": "#f6ec9f",
 									"font": "Arial;13;0",
 									"left": 240,
-									"top": -48,
+									"top": -32,
 									"width": 10,
 									"height": 10
 								},
@@ -1304,7 +1266,7 @@
 									"fillColor": "#f6ec9f",
 									"font": "Arial;13;0",
 									"left": 240,
-									"top": -48,
+									"top": -32,
 									"width": 10,
 									"height": 10
 								}
@@ -1314,9 +1276,9 @@
 							"font": "Arial;13;0",
 							"containerChangeable": true,
 							"left": 672,
-							"top": 56,
+							"top": 72,
 							"width": 164.2734375,
-							"height": 129,
+							"height": 97,
 							"showVisibility": false,
 							"nameCompartment": {
 								"$ref": "AAAAAAF/ZSyDJpvWlI0="
@@ -3721,12 +3683,12 @@
 										},
 										{
 											"_type": "UMLAttributeView",
-											"_id": "AAAAAAF/iJ2nWqE0rhM=",
+											"_id": "AAAAAAF/iLZ8fuRsVIw=",
 											"_parent": {
 												"$ref": "AAAAAAF/iJzq3aBU/cw="
 											},
 											"model": {
-												"$ref": "AAAAAAF/iJ2nSKElaio="
+												"$ref": "AAAAAAF/iLZ8aORd3hg="
 											},
 											"lineColor": "#450f0f",
 											"fillColor": "#f6ec9f",
@@ -3735,7 +3697,7 @@
 											"top": 325,
 											"width": 99.708984375,
 											"height": 13,
-											"text": "cout: Number",
+											"text": "cout: Double",
 											"horizontalAlignment": 0
 										}
 									],
@@ -4148,7 +4110,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 760,
-									"top": 224,
+									"top": 216,
 									"width": 85.6298828125,
 									"height": 13,
 									"alpha": 1.6099917082784523,
@@ -4171,7 +4133,7 @@
 									"visible": null,
 									"font": "Arial;13;0",
 									"left": 780,
-									"top": 225,
+									"top": 217,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -4192,7 +4154,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 736,
-									"top": 226,
+									"top": 218,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -4212,7 +4174,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 755,
-									"top": 205,
+									"top": 189,
 									"width": 23.84814453125,
 									"height": 13,
 									"alpha": 0.5235987755982988,
@@ -4234,8 +4196,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 779,
-									"top": 207,
+									"left": 780,
+									"top": 191,
 									"height": 13,
 									"alpha": 0.7853981633974483,
 									"distance": 40,
@@ -4255,7 +4217,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 737,
-									"top": 200,
+									"top": 184,
 									"width": 5.05908203125,
 									"height": 13,
 									"alpha": -0.5235987755982988,
@@ -4276,8 +4238,8 @@
 										"$ref": "AAAAAAF/iKHUK6dGEmQ="
 									},
 									"font": "Arial;13;0",
-									"left": 759,
-									"top": 248,
+									"left": 758,
+									"top": 247,
 									"width": 42.63720703125,
 									"height": 13,
 									"alpha": -0.8486993686409332,
@@ -4299,7 +4261,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 779,
-									"top": 245,
+									"top": 244,
 									"height": 13,
 									"alpha": -0.7853981633974483,
 									"distance": 40,
@@ -4368,7 +4330,7 @@
 								"$ref": "AAAAAAF/ZSyDJpvVC+A="
 							},
 							"lineStyle": 1,
-							"points": "752:185;751:279",
+							"points": "752:169;751:279",
 							"nameLabel": {
 								"$ref": "AAAAAAF/iKHULKdJEf0="
 							},
@@ -4711,16 +4673,6 @@
 						},
 						{
 							"_type": "UMLAttribute",
-							"_id": "AAAAAAF/ZS41SpwQjj4=",
-							"_parent": {
-								"$ref": "AAAAAAF/ZSyDJZvTJa8="
-							},
-							"name": "modele",
-							"visibility": "private",
-							"type": "Modele"
-						},
-						{
-							"_type": "UMLAttribute",
 							"_id": "AAAAAAF/ZS5w2JwXV1I=",
 							"_parent": {
 								"$ref": "AAAAAAF/ZSyDJZvTJa8="
@@ -4740,16 +4692,6 @@
 							"type": {
 								"$ref": "AAAAAAF/ZSwm/puWEVY="
 							}
-						},
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAF/ZS8g/JwoBNU=",
-							"_parent": {
-								"$ref": "AAAAAAF/ZSyDJZvTJa8="
-							},
-							"name": "prix",
-							"visibility": "private",
-							"type": "Number"
 						}
 					]
 				},
@@ -4986,13 +4928,12 @@
 						},
 						{
 							"_type": "UMLAttribute",
-							"_id": "AAAAAAF/iJ2nSKElaio=",
+							"_id": "AAAAAAF/iLZ8aORd3hg=",
 							"_parent": {
 								"$ref": "AAAAAAF/iJzq3KBMGAQ="
 							},
 							"name": "cout",
-							"visibility": "private",
-							"type": "Number"
+							"type": "Double"
 						}
 					]
 				},
