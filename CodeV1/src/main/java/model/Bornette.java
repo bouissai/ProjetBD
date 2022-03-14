@@ -1,8 +1,6 @@
 package model;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Entity
 public class Bornette {
 
@@ -11,7 +9,8 @@ public class Bornette {
 
     private Etat etat;
 
-    private Velo Propose ;
+    @OneToOne
+    private Velo proposeDeLouer ;
 
     public int getNumeroBorn() {
         return numeroBorn;
@@ -30,10 +29,10 @@ public class Bornette {
     }
 
     public Velo getPropose() {
-        return Propose;
+        return this.proposeDeLouer;
     }
 
-    public void setPropose(Velo propose) {
-        Propose = propose;
+    public void setPropose(Velo velo) {
+        this.proposeDeLouer = velo;
     }
 }

@@ -1,9 +1,7 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Client {
@@ -12,6 +10,8 @@ public class Client {
 
     private int numeroCB;
     private int codeSecret;
+    @OneToMany
+    private List<Location> loue;
 
     public Client(){
 

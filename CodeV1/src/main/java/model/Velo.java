@@ -1,9 +1,6 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 @Entity
@@ -25,8 +22,8 @@ public class Velo {
     private Date dateMisesEnService ;
     private Etat etat ;
 
-
-    //private List<Location> Velos ;
+    @ManyToMany
+    private List<Location> estLoue ;
     public int getNumeroVelo() {
         return numeroVelo;
     }
