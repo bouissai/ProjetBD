@@ -1,22 +1,16 @@
 package fr.uga.im2ag.l3.miage.db.repository;
 
 import com.github.javafaker.Faker;
-
-import fr.uga.im2ag.l3.miage.db.model.Grade;
-import fr.uga.im2ag.l3.miage.db.model.GraduationClass;
-import fr.uga.im2ag.l3.miage.db.model.Person;
-import fr.uga.im2ag.l3.miage.db.model.Student;
-import fr.uga.im2ag.l3.miage.db.model.Subject;
-import fr.uga.im2ag.l3.miage.db.model.Teacher;
+import fr.uga.im2ag.l3.miage.db.model.Station;
 
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
+//Classe qui genere les données fictives pour les chaque instance de classe
 public class Fixtures {
 
     private static final Faker FAKER = Faker.instance(new Random(42));
-
+    /*
     public static Subject createSubject() {
         return new Subject()
                 .setName(FAKER.funnyName().name())
@@ -27,8 +21,8 @@ public class Fixtures {
     }
 
 
-    public static Grade createGrade(Subject subject) {
-        return new Grade()
+    public static Station createGrade(Station subject) {
+        return new Station()
                 .setSubject(subject)
                 .setValue((float) FAKER.number().randomDouble(1, 0, 20))
                 .setWeight((float) FAKER.number().randomDouble(1, 0, 10));
@@ -40,7 +34,7 @@ public class Fixtures {
                 .setYear(2021);
     }
 
-    public static Student createStudent(GraduationClass graduationClass) {
+    public static Station createStudent(GraduationClass graduationClass) {
         var student = new Student().setBelongTo(graduationClass);
         student.setBirth(FAKER.date().past(19 * 365, TimeUnit.DAYS))
                 .setFirstName(FAKER.name().firstName())
@@ -66,6 +60,6 @@ public class Fixtures {
 
         return teacher;
 
-    }
+    }*/
 
 }

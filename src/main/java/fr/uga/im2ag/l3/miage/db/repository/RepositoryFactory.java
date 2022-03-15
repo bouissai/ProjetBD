@@ -1,39 +1,44 @@
 package fr.uga.im2ag.l3.miage.db.repository;
 
 
-import fr.uga.im2ag.l3.miage.db.repository.api.GradeRepository;
-import fr.uga.im2ag.l3.miage.db.repository.api.GraduationClassRepository;
-import fr.uga.im2ag.l3.miage.db.repository.api.StudentRepository;
-import fr.uga.im2ag.l3.miage.db.repository.api.SubjectRepository;
-import fr.uga.im2ag.l3.miage.db.repository.api.TeacherRepository;
-import fr.uga.im2ag.l3.miage.db.repository.impl.GradeRepositoryImpl;
-import fr.uga.im2ag.l3.miage.db.repository.impl.GraduationClassRepositoryImpl;
-import fr.uga.im2ag.l3.miage.db.repository.impl.StudentRepositoryImpl;
-import fr.uga.im2ag.l3.miage.db.repository.impl.SubjectRepositoryImpl;
-import fr.uga.im2ag.l3.miage.db.repository.impl.TeacherRepositoryImpl;
+
+
+import fr.uga.im2ag.l3.miage.db.repository.api.*;
+import fr.uga.im2ag.l3.miage.db.repository.impl.*;
 
 import javax.persistence.EntityManager;
 
 public class RepositoryFactory {
 
-    public SubjectRepository newSubjectRepository(EntityManager entityManager) {
-        return new SubjectRepositoryImpl(entityManager);
+    public StationRepository newStationRepository(EntityManager entityManager) {
+        return new StationRepositoryImpl(entityManager);
     }
 
-    public StudentRepository newStudentRepository(EntityManager entityManager) {
-        return new StudentRepositoryImpl(entityManager);
+    public BornetteRepository newBornetteRepository(EntityManager entityManager) {
+        return new BornetteRepositoryImpl(entityManager);
     }
 
-    public GradeRepository newGradeRepository(EntityManager entityManager) {
-        return new GradeRepositoryImpl(entityManager);
+    public VeloRepository newVeloRepository(EntityManager entityManager) {
+        return new VeloRepositoryImpl(entityManager);
     }
 
-    public GraduationClassRepository newGraduationClassRepository(EntityManager entityManager) {
-        return new GraduationClassRepositoryImpl(entityManager);
+    public LocationRepository newLocationRepository(EntityManager entityManager) {
+        return new LocationRepositoryImpl(entityManager);
     }
 
-    public TeacherRepository newTeacherRepository(EntityManager entityManager) {
-        return new TeacherRepositoryImpl(entityManager);
+    public ModeleRepository newModeleRepository(EntityManager entityManager) {
+        return new ModeleRepositoryImpl(entityManager);
+    }
+
+    public ClientRepository newClientRepository(EntityManager entityManager) {
+        return new ClientRepositoryImpl(entityManager);
+    }
+
+    public AbonneRepository newAbonneRepository(EntityManager entityManager) {
+        return new AbonneRepositoryImpl(entityManager);
+    }
+    public NonAbonneRepository newNonAbonneRepository(EntityManager entityManager) {
+        return new NonAbonneRepositoryImpl(entityManager);
     }
 
 }
