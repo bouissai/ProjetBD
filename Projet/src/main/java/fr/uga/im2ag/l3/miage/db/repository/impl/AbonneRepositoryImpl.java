@@ -14,4 +14,5 @@ public class AbonneRepositoryImpl  extends BaseRepositoryImpl implements AbonneR
     public AbonneRepositoryImpl(EntityManager entityManager) {
         super(entityManager);
     }
+
 }

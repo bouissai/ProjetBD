@@ -1,5 +1,7 @@
 package fr.uga.im2ag.l3.miage.db.repository.impl;
 
+import fr.uga.im2ag.l3.miage.db.model.Bornette;
+import fr.uga.im2ag.l3.miage.db.model.Station;
 import fr.uga.im2ag.l3.miage.db.repository.api.BornetteRepository;
 
 
@@ -19,5 +21,13 @@ public class BornetteRepositoryImpl extends BaseRepositoryImpl implements Bornet
         super(entityManager);
     }
 
+    public Bornette findById(Long id) {
+        return entityManager.find(Bornette.class, id);
+    }
+
+    public List<Bornette> getAll(){
+        return entityManager.createNamedQuery("get-all-bornettes", Bornette.class ).getResultList();
+
+    }
 
 }

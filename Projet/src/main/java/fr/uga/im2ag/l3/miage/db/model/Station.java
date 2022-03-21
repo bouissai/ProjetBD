@@ -34,6 +34,22 @@ public class Station {
         return adresse;
     }
 
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public Statut getStatus() {
+        return status;
+    }
+
+    public List<Bornette> getContient() {
+        return Contient;
+    }
+
+    public void setContient(List<Bornette> contient) {
+        Contient = contient;
+    }
+
     public void setStatus(Statut status) {
         this.status = status;
     }

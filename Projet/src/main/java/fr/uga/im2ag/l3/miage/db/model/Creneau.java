@@ -1,4 +1,4 @@
-package fr.uga.im2ag.l3.miage.db.model;
+/*package fr.uga.im2ag.l3.miage.db.model;
 
 import java.sql.Date;
 
@@ -67,4 +67,4 @@ public class Creneau {
         this.station = station;
     }
 
-}
+}*/
