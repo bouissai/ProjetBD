@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+E:\MIAGE_L3_IM2AG\S6\BD\JPA_TP\TP_JPA_Student\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
+1549205911.index
+1067094681.index
