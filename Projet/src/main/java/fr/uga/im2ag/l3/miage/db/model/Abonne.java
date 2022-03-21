@@ -1,7 +1,12 @@
 package fr.uga.im2ag.l3.miage.db.model;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.List;
+
+@Entity
 
 public class Abonne extends Client{
 
@@ -11,7 +16,7 @@ public class Abonne extends Client{
     private Sexe sexe ;
     private String adresse ;
     private Date dateAbonnement ;
-
+    @OneToMany
     private List<Location> locations;
 
     public Abonne(int numeroCB, int codeSecret, String nom, String prenom, Date dateNaissance, Sexe sexe, String adresse, Date dateAbonnement) {
@@ -22,6 +27,10 @@ public class Abonne extends Client{
         this.sexe = sexe;
         this.adresse = adresse;
         this.dateAbonnement = dateAbonnement;
+    }
+
+    public Abonne() {
+
     }
 
     public String getNom() {
