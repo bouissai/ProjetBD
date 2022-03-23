@@ -2,9 +2,10 @@ package com.example.projetspring;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 import java.util.Date;
 @Entity
-@DiscriminatorValue("Oui")
+@DiscriminatorValue("abonne")
 public class Abonne extends Client{
 
     private String nom ;

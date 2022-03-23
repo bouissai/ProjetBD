@@ -13,24 +13,20 @@ public class Velo {
 
 
         public Velo(Marque modele, Date dateMisesEnService, Etat etat, double prix) {
-
             this.modele = modele;
             this.dateMisesEnService = dateMisesEnService;
             this.etat = etat;
-
         }
+
         @Id
         @GeneratedValue
         private Long numeroVelo ;
 
         @ManyToOne(fetch = FetchType.EAGER)
         private  Location location ;
-
         private Marque modele ;
         private Date dateMisesEnService ;
         private Etat etat ;
-
-
 
     public Velo() {
 

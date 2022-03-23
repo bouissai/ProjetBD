@@ -31,6 +31,8 @@ public class Bornette {
     }
 
 
+    public Long getNumeroBorn() {return numeroBorn;}
+
     public Etat getEtat() {
         return etat;
     }

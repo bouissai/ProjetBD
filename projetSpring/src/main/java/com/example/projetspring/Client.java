@@ -2,14 +2,14 @@ package com.example.projetspring;
 
 import javax.persistence.*;
 import java.util.List;
+
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name ="Abonnement", discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "TYPE_ENTITE")
+
+
 public abstract class Client {
-
-
     @Id
-    @GeneratedValue
     private int codeSecret;
     @Column(nullable = false)
     private int numeroCB;
