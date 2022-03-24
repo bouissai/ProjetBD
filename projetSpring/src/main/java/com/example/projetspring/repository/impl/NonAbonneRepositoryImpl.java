@@ -3,6 +3,8 @@ package com.example.projetspring.repository.impl;
 import com.example.projetspring.Client;
 import com.example.projetspring.NonAbonne;
 import com.example.projetspring.repository.api.NonAbonneRepository;
+import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.repository.query.Param;
 
 import javax.persistence.EntityManager;
 
@@ -16,7 +18,11 @@ public class NonAbonneRepositoryImpl  extends BaseRepositoryImpl implements NonA
         super(entityManager);
     }
 
-    public NonAbonne findById(int id) {
+    public NonAbonne findById(long id) {
         return entityManager.find(NonAbonne.class, id);
+    }
+
+    public void delete(NonAbonne nonAbonne) {
+        entityManager.remove(nonAbonne);
     }
 }

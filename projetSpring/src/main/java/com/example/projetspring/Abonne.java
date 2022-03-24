@@ -2,6 +2,7 @@ package com.example.projetspring;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.time.LocalDate;
 import java.util.Date;
 @Entity(name="Abonne")
 @DiscriminatorValue("Oui")
@@ -9,7 +10,7 @@ public class Abonne extends Client{
 
     private String nom ;
     private String prenom ;
-    private Date dateNaissance ;
+    private LocalDate dateNaissance ;
     private Sexe sexe ;
     private String adresse ;
     private Date dateAbonnement ;
@@ -32,11 +33,11 @@ public class Abonne extends Client{
         this.prenom = prenom;
     }
 
-    public Date getDateNaissance() {
+    public LocalDate getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
+    public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 

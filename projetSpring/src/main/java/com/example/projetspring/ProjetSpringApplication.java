@@ -1,10 +1,7 @@
 package com.example.projetspring;
 
 import com.example.projetspring.repository.RepositoryFactory;
-import com.example.projetspring.repository.impl.ClientRepositoryImpl;
-import com.example.projetspring.repository.impl.LocationRepositoryImpl;
-import com.example.projetspring.repository.impl.StationRepositoryImpl;
-import com.example.projetspring.repository.impl.VeloRepositoryImpl;
+import com.example.projetspring.repository.impl.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -131,7 +128,8 @@ public class ProjetSpringApplication {
         VeloRepositoryImpl veloRepository = (VeloRepositoryImpl) daoFactory.newVeloRepository(entityManager);
         ClientRepositoryImpl clientRepository = (ClientRepositoryImpl) daoFactory.newClientRepository(entityManager);
         LocationRepositoryImpl locationRepository = (LocationRepositoryImpl) daoFactory.newLocationRepository(entityManager);
-
+        NonAbonneRepositoryImpl nonAbonneRepository =(NonAbonneRepositoryImpl) daoFactory.newNonAbonneRepository(entityManager);
+        AbonneRepositoryImpl abonneRepository = (AbonneRepositoryImpl) daoFactory.newAbonneRepository(entityManager);
         //lancement MENU INTERFACE
         LocalDate todaysDate = LocalDate.now();
         Scanner scanner = new Scanner(System.in);
@@ -193,7 +191,28 @@ public class ProjetSpringApplication {
 
                 case "3":
                     //- s'abonner?
-
+                    System.out.println("Veuillez saisir votre code secret : ");
+                    long codeNonAbonne = scanner.nextInt();
+                    NonAbonne nonAbo = nonAbonneRepository.findById(codeNonAbonne);
+                    nonAbonneRepository.delete(nonAbo);
+                    System.out.println(" Veuillez saisir votre nom : ");
+                    String prenom = scanner.next();
+                    System.out.println(" prenom :");
+                    String nom = scanner.next();
+                    System.out.println(" adresse : ");
+                    String adresse = scanner.nextLine();
+                    System.out.println(" date de naissance sous format yyyy-mm-dd");
+                    String dateNaisToconvert  = scanner.next();
+                    LocalDate dateNais = LocalDate.parse(dateNaisToconvert);
+                    Sexe sexe;
+                    System.out.println(" sexe (H/F) : ");
+                    String rep = scanner.next();
+                    if(rep=="H"){
+                        sexe = Sexe.HOMME;
+                    }else{
+                        sexe = Sexe.FEMME;
+                    }
+                    abonneRepository.saveAbonne(nom, prenom, adresse,sexe, dateNais);
                 case "4":
                     //- quitter
                     d=false;
