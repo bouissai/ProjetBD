@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "Location")
 @NamedQueries(
         @NamedQuery( name = "get-all-locations" , query="SELECT s from Location s"
         )
@@ -15,7 +15,7 @@ public class Location {
     private Long id ;
     @Column(nullable = false)
     private Date dateLocation ;
-    @Column(nullable = false)
+    @Column
     private Date dateRendu ;
 
     @OneToMany(mappedBy = "location")
@@ -33,4 +33,21 @@ public class Location {
         return dateRendu;
     }
 
+    public void setDateLocation(Date date){
+        this.dateLocation = date;
+    }
+
+    public void setDateRendu(Date dateRendu) {
+        this.dateRendu = dateRendu;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" + "\n" +
+                "id=" + id + "\n" +
+                ", dateLocation=" + dateLocation + "\n" +
+                ", dateRendu =" + dateRendu + "\n" +
+                ", Velos=" + Velos + "\n" +
+                '}';
+    }
 }

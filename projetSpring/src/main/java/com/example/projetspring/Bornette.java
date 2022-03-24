@@ -3,35 +3,23 @@ package com.example.projetspring;
 import javax.persistence.*;
 ;
 
-@Entity
+@Entity(name = "Bornette")
 @NamedQueries(
         @NamedQuery( name = "get-all-bornettes" , query="SELECT s from Bornette s"
         )
 )
-
 public class Bornette {
 
     @Id
     @GeneratedValue
-    private Long numeroBorn;
+    private long numeroBorn;
+    @Column
     private Etat etat;
     @OneToOne
-    private Velo Propose ;
+    private Velo Propose;
+    @Column
     private boolean estPresent;
 
-    public Bornette( Etat etat, Velo propose, boolean estPresent) {
-        this.numeroBorn = numeroBorn;
-        this.etat = etat;
-        this.Propose = propose;
-        this.estPresent = estPresent;
-    }
-
-    public Bornette() {
-
-    }
-
-
-    public Long getNumeroBorn() {return numeroBorn;}
 
     public Etat getEtat() {
         return etat;
@@ -45,15 +33,29 @@ public class Bornette {
         return Propose;
     }
 
-    public void setPropose(Velo propose) {
-        Propose = propose;
+    public void setPropose(Velo velo) {
+        this.Propose = velo;
     }
 
-    public boolean isEstPresent() {
+    public boolean estPresent() {
         return estPresent;
     }
 
     public void setEstPresent(boolean estPresent) {
         this.estPresent = estPresent;
+    }
+
+    public long getNumeroBorn() {
+        return numeroBorn;
+    }
+
+    @Override
+    public String toString() {
+        return "Bornette " +
+                "numeroBorn=" + numeroBorn +
+                ", etat=" + etat +
+                ", Propose=" + Propose.toString() +
+                ", estPresent=" + estPresent +
+                '}';
     }
 }

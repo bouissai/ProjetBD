@@ -1,16 +1,16 @@
 package com.example.projetspring;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity(name ="Modele")
 public class Modele {
+    @Id
     private Marque marque ;
     private double cout ;
 
     public Marque getMarque() {
         return marque;
-    }
-
-    public Modele(Marque marque, double cout) {
-        this.marque = marque;
-        this.cout = cout;
     }
 
     public void setMarque(Marque marque) {

@@ -11,26 +11,17 @@ import java.util.Date;
 
 public class Velo {
 
-
-        public Velo(Marque modele, Date dateMisesEnService, Etat etat, double prix) {
-            this.modele = modele;
-            this.dateMisesEnService = dateMisesEnService;
-            this.etat = etat;
-        }
-
         @Id
         @GeneratedValue
         private Long numeroVelo ;
 
-        @ManyToOne(fetch = FetchType.EAGER)
+        @ManyToOne
         private  Location location ;
+
         private Marque modele ;
         private Date dateMisesEnService ;
         private Etat etat ;
 
-    public Velo() {
-
-    }
 
 
     // private List<Location> Velos ;
@@ -62,6 +53,21 @@ public class Velo {
 
         public Long getNumeroVelo() {
             return numeroVelo;
+    }
+
+        public void setLocation(Location location) {
+            this.location = location;
+        }
+
+    @Override
+    public String toString() {
+        return "Velo{" +
+                "numeroVelo=" + numeroVelo + "\n" +
+                ", location=" + location + "\n" +
+                ", modele=" + modele + "\n" +
+                ", dateMisesEnService=" + dateMisesEnService + "\n" +
+                ", etat=" + etat + "\n" +
+                '}';
     }
 }
 

@@ -88,9 +88,18 @@ class StationTest  extends Base{
         velo_1.setEtat(Etat.HS);
 
 
-        var Bornette_1 = new Bornette(Etat.OK ,velo_1,true );
-        var Bornette_2 = new Bornette(Etat.HS, velo_2 , true);
-        var Bornette_3 = new Bornette(Etat.OK , velo_3,true);
+        var Bornette_1 = new Bornette();
+        Bornette_1.setEtat(Etat.HS);
+        Bornette_1.setPropose(velo_1);
+        Bornette_1.setEstPresent(true);
+        var Bornette_2 = new Bornette();
+        Bornette_2.setEtat(Etat.HS);
+        Bornette_2.setPropose(velo_2);
+        Bornette_2.setEstPresent(true);
+        var Bornette_3 = new Bornette();
+        Bornette_3.setEtat(Etat.HS);
+        Bornette_3.setPropose(velo_3);
+        Bornette_3.setEstPresent(true);
         List<Bornette> bornettes = new ArrayList<Bornette>();
         bornettes.add(Bornette_1);
         bornettes.add(Bornette_2);
@@ -128,9 +137,15 @@ class StationTest  extends Base{
         velo_2.setEtat(Etat.OK);
         velo_3.setEtat(Etat.HS);
 
-        var bornette_1 = new Bornette(Etat.OK,velo_1,true);
-        var bornette_2 = new Bornette(Etat.OK,velo_2,true);
-        var bornette_3 = new Bornette(Etat.HS,velo_3,true);
+        var bornette_1 = new Bornette();
+        bornette_1.setEtat(Etat.HS);
+        bornette_1.setPropose(velo_3);
+        bornette_1.setEstPresent(true);
+        var bornette_2 = new Bornette();
+        bornette_2.setEtat(Etat.HS);
+        bornette_2.setPropose(velo_2);
+        bornette_2.setEstPresent(true);
+        var bornette_3 = new Bornette();
         var bornette_4 = new Bornette();
         var bornette_5 = new Bornette();
 
@@ -166,9 +181,16 @@ class StationTest  extends Base{
         velo_2.setEtat(Etat.OK);
         velo_3.setEtat(Etat.HS);
 
-        var bornette_1 = new Bornette(Etat.OK,velo_1,true);
-        var bornette_2 = new Bornette(Etat.OK,velo_2,true);
-        var bornette_3 = new Bornette(Etat.HS,velo_3,true);
+        var bornette_1 = new Bornette();
+        bornette_1.setEtat(Etat.HS);
+        bornette_1.setPropose(velo_1);
+        bornette_1.setEstPresent(true);
+        var bornette_2 = new Bornette();
+        bornette_2.setEtat(Etat.HS);
+        bornette_2.setPropose(velo_2);
+        bornette_2.setEstPresent(true);
+        var bornette_3 = new Bornette();
+
         var bornette_4 = new Bornette();
         var bornette_5 = new Bornette();
 
@@ -214,9 +236,18 @@ class StationTest  extends Base{
         velo_2.setEtat(Etat.OK);
         velo_3.setEtat(Etat.HS);
 
-        var bornette_1 = new Bornette(Etat.OK,velo_1,true);
-        var bornette_2 = new Bornette(Etat.OK,velo_2,true);
-        var bornette_3 = new Bornette(Etat.HS,velo_3,true);
+        var bornette_1 = new Bornette();
+        bornette_1.setEtat(Etat.HS);
+        bornette_1.setPropose(velo_1);
+        bornette_1.setEstPresent(true);
+        var bornette_2 = new Bornette();
+        bornette_2.setEtat(Etat.HS);
+        bornette_2.setPropose(velo_3);
+        bornette_2.setEstPresent(true);
+        var bornette_3 = new Bornette();
+        bornette_3.setEtat(Etat.HS);
+        bornette_3.setPropose(velo_3);
+        bornette_3.setEstPresent(true);
         var bornette_4 = new Bornette();
         var bornette_5 = new Bornette();
 

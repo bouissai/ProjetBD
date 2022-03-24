@@ -43,7 +43,7 @@ public class StationRepositoryImpl  extends BaseRepositoryImpl implements Statio
     public int getNombreVeloParStation(Station station){
         int somme = 0 ;
         for( int i =0 ; i < station.getContient().size() ; i++){
-                if( station.getContient().get(i).isEstPresent()){
+                if( station.getContient().get(i).estPresent()){
                     somme++;
                 }
         }

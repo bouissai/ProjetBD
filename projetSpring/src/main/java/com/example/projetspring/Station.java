@@ -2,10 +2,11 @@ package com.example.projetspring;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
+@Entity(name = "Station")
 @NamedQueries(
         @NamedQuery( name = "get-all-stations" , query="SELECT s from Station s"
 )
@@ -20,7 +21,7 @@ public class Station {
     private Statut status;
 
     @OneToMany
-    private List<Bornette> Contient ;
+    private List<Bornette> Contient = new ArrayList<Bornette>();
 
     public Long getId() {
         return id;
@@ -56,5 +57,19 @@ public class Station {
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
+    }
+
+    @Override
+    public String toString() {
+        String contient = "";
+        for(Bornette b : this.Contient){
+            contient = contient + b.toString();
+        }
+        return "Station " +
+                "id=" + id +
+                ", a l'adresse='" + adresse + '\'' +
+                ", status=" + status +
+                ", Contient les bornettes : " + contient +
+                '}';
     }
 }

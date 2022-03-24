@@ -25,16 +25,17 @@ public class NonAbonneTest extends Base{
         }
     }
 
-    @Test
+   /* @Test
     void shouldSaveNonAbonne(){
-        final var nonAbonne = new NonAbonne(123456,7654);
+        final NonAbonne nonAbonne = new NonAbonne(123456,7654);
+
         entityManager.getTransaction().begin();
-        entityManager.persist(nonAbonne);/////
+        entityManager.persist(nonAbonne);
         entityManager.getTransaction().commit();
         entityManager.detach(nonAbonne);
 
         Client c = nonAbonneRepository.findById(nonAbonne.getCodeSecret());
 
         assertThat(c.getCodeSecret() == nonAbonne.getCodeSecret());
-    }
+    }*/
 }

@@ -2,10 +2,9 @@ package com.example.projetspring;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.NamedQuery;
 import java.util.Date;
-@Entity
-@DiscriminatorValue("abonne")
+@Entity(name="Abonne")
+@DiscriminatorValue("Oui")
 public class Abonne extends Client{
 
     private String nom ;
@@ -16,23 +15,6 @@ public class Abonne extends Client{
     private Date dateAbonnement ;
 
 
-    public Abonne(){
-        super();
-    }
-
-    public Abonne(int numeroCB, int codeSecret){
-        super(numeroCB,codeSecret);
-    }
-
-    public Abonne(int numeroCB, int codeSecret, String nom, String prenom, Date dateNaissance, Sexe sexe, String adresse, Date dateAbonnement) {
-        super(numeroCB, codeSecret);
-        this.nom = nom;
-        this.prenom = prenom;
-        this.dateNaissance = dateNaissance;
-        this.sexe = sexe;
-        this.adresse = adresse;
-        this.dateAbonnement = dateAbonnement;
-    }
 
     public String getNom() {
         return nom;

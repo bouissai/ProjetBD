@@ -1,17 +1,18 @@
 package com.example.projetspring;
 
 import com.example.projetspring.repository.RepositoryFactory;
+import com.example.projetspring.repository.impl.ClientRepositoryImpl;
+import com.example.projetspring.repository.impl.LocationRepositoryImpl;
 import com.example.projetspring.repository.impl.StationRepositoryImpl;
+import com.example.projetspring.repository.impl.VeloRepositoryImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.ui.Model;
-import java.util.Date;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.example.projetspring.Statut.*;
 
@@ -22,15 +23,12 @@ public class ProjetSpringApplication {
 
     public static void main(String[] args) throws IOException {
 
-
-        //connexion à la BD
         SpringApplication.run(ProjetSpringApplication.class, args);
 
         EntityManager entityManager;
         RepositoryFactory daoFactory = new RepositoryFactory();
-        entityManager = Persistence.createEntityManagerFactory("Main").createEntityManager();
-
-
+        entityManager = Persistence.createEntityManagerFactory("Main")
+                .createEntityManager();
         //instantiation des objets
         final var station1 = new Station();
         final var station2 = new Station();
@@ -55,10 +53,16 @@ public class ProjetSpringApplication {
         station5.setAdresse("Rue condillac");
 //bornette
         final var bornette1=new Bornette();
+        bornette1.setEstPresent(true);
+        bornette1.setEtat(Etat.OK);
         final var bornette2=new Bornette();
+        bornette2.setEstPresent(true);
+        bornette2.setEtat(Etat.OK);
         final var bornette3=new Bornette();
         final var bornette4=new Bornette();
         final var bornette5=new Bornette();
+
+
 
 
         //vélos
@@ -66,6 +70,7 @@ public class ProjetSpringApplication {
         Velo velo2=new Velo();
         Velo velo3=new Velo();
         Velo velo4=new Velo();
+
 
 
         velo1.setModele(Marque.VTT);
@@ -82,6 +87,36 @@ public class ProjetSpringApplication {
         velo4.setModele(Marque.PEUGEOT);
         velo4.setEtat(Etat.OK);
 
+        //sauvegarde dans la BD
+        entityManager.getTransaction().begin();
+        entityManager.persist(velo1);
+        entityManager.getTransaction().commit();
+        entityManager.detach(velo1);
+        entityManager.getTransaction().begin();
+        entityManager.persist(velo2);
+        entityManager.getTransaction().commit();
+        entityManager.detach(velo2);
+
+        // bornettes -> velos
+        bornette1.setPropose(velo1);
+        bornette2.setPropose(velo2);
+
+        //sauvegarde dans la BD
+        entityManager.getTransaction().begin();
+        entityManager.persist(bornette1);
+        entityManager.getTransaction().commit();
+        entityManager.detach(bornette1);
+        entityManager.getTransaction().begin();
+        entityManager.persist(bornette2);
+        entityManager.getTransaction().commit();
+        entityManager.detach(bornette2);
+
+        // ajouter les bornettes dans une station
+        List<Bornette> bornettes = new ArrayList<Bornette>();
+        bornettes.add(bornette1);
+        bornettes.add(bornette2);
+        station1.setContient(bornettes);
+
 
 
 
@@ -91,21 +126,25 @@ public class ProjetSpringApplication {
         entityManager.getTransaction().commit();
         entityManager.detach(station1);
 
+        //repositpries
+
+        VeloRepositoryImpl veloRepository = (VeloRepositoryImpl) daoFactory.newVeloRepository(entityManager);
+        ClientRepositoryImpl clientRepository = (ClientRepositoryImpl) daoFactory.newClientRepository(entityManager);
+        LocationRepositoryImpl locationRepository = (LocationRepositoryImpl) daoFactory.newLocationRepository(entityManager);
 
         //lancement MENU INTERFACE
         LocalDate todaysDate = LocalDate.now();
         Scanner scanner = new Scanner(System.in);
         String reponse1;
         boolean d=true;
-
         while(d){
             System.out.print("----------------------------------------");
-            System.out.print("Bonjour, vous êtes sur le MENU PRINCIPAL ");
+            System.out.print("Bonjour, vous êtes sur le MENU PRINCIPAL");
             System.out.println("Nous sommes le "+todaysDate);
             System.out.println("\n\t\t\t\t----MENU PRINCIPAL----");
             System.out.println("\n\t\t\t\tQue voulez-vous faire?");
-            System.out.println("(1) - Entrer dans une station ");
-            System.out.println("(2) - Voir l'état de toutes les stations");
+            System.out.println("(1) - Emprunter un velo ");
+            System.out.println("(2) - Rendre un velo");
             System.out.println("(3) - S'abonner");
             System.out.println("(4) - Quitter");
 
@@ -113,105 +152,79 @@ public class ProjetSpringApplication {
 
             switch(reponse1){
                 case "1":
-                    StationRepositoryImpl stationRepository= (StationRepositoryImpl) daoFactory.newStationRepository(entityManager);
-
-                    //affiche les stations dispo
-                    System.out.print("\nVoici les stations disponibles : \n");
-                    var stations = stationRepository.getAll();
-                    stations.forEach(station -> System.out.print("("+station.getId()+") - "+station.getAdresse()+" "+station.getStatut()+"\n"));
-
                     //- demander dans quelle station il est?
-                    System.out.print("\nDans quelle station êtes vous ? \n");
+                    System.out.print("Dans quelle station êtes vous ? \n");
                     long n = scanner.nextInt();
+                    StationRepositoryImpl stationRepository= (StationRepositoryImpl) daoFactory.newStationRepository(entityManager);
+                    var T_station = stationRepository.findById(n);
+                    System.out.println(T_station.toString());
 
-                    var stationSelected = stationRepository.findById(n);
+                    System.out.println(" Veuillez choisir un velo : ");
+                    long numVelo = scanner.nextInt();
 
-                    if(n==stationSelected.getId()){
+                    System.out.println("Veuillez saisir le numero de votre CB :");
+                    int numCarte = scanner.nextInt();
 
-                        //Après avoir noté sa station
-                        System.out.println(stationSelected.getAdresse());
+                    Client na1 = new NonAbonne();
+                    na1.setNumeroCB(numCarte);
+                    clientRepository.clientLoueUnVelo(na1, veloRepository.findById(numVelo));
+                    entityManager.getTransaction().begin();
+                    entityManager.persist(na1);
+                    entityManager.getTransaction().commit();
+                    entityManager.detach(na1);
 
-                        String reponse2;
-                        boolean d2=true;
-
-                        while(d2){
-
-                            //affichage info station entrée
-                            System.out.print("----------------------------------------");
-                            System.out.print("vous êtes sur le MENU de la STATION \n");
-                            System.out.println("Nous sommes le "+todaysDate);
-                            System.out.println("\n\t\t\t\t----Station "+stationSelected.getId()+"----");
-                            System.out.println("\nEtat station :");
-                            System.out.println("    - adresse : "+stationSelected.getAdresse());
-                            System.out.println("    - statut : "+stationSelected.getStatut());
-                            System.out.println("    - nombre de vélos disponibles : "+stationRepository.getNombreVeloOKByStation(stationSelected));
-                            System.out.println("    - nombre de vélos endommagés : "+stationRepository.getNombreVeloEndommageByStation(stationSelected));
-                            System.out.println("    - nombre de places vides : "+(stationSelected.getContient().size()-stationRepository.getNombreVeloParStation(stationSelected)));
-
-                            //affichage info bornes
-                            System.out.println("\nEtat des bornes :");
-                            stationSelected.getContient().forEach(bornette -> {
-                                        if(bornette.isEstPresent()) {
-                                            if(bornette.getPropose().getEtat()==Etat.OK){
-                                                System.out.println("    - B n°"+bornette.getNumeroBorn()+" | etat : "+bornette.getEtat()+" | place : vélo "+ bornette.getPropose().getModele()+" disponible");
-                                            }else {
-                                                System.out.println("    - B n°"+bornette.getNumeroBorn()+" | etat : "+bornette.getEtat()+" | place : vélo "+ bornette.getPropose().getModele()+" en panne");
-                                            }
-                                        }else {
-                                            System.out.println("    - B n°" + bornette.getNumeroBorn() + " | etat : " + bornette.getEtat() + " | place : vide ");
-                                        }
-                                    }
-                            );
-
-                            System.out.println("\n\t\t\t\t----MENU Station----");
-                            System.out.println("\n\t\t\t\tQue voulez-vous faire?");
-                            //System.out.println("(1) - Voir les informations de la station ");
-                            System.out.println("(1) - Emprunter un/des vélos");
-                            System.out.println("(2) - Rendre un/des vélos");
-                            System.out.println("(3) - Signaler un vélo");
-                            System.out.println("(4) - Quitter");
-
-                            reponse2 = scanner.next();
-
-                            switch (reponse2){
-
-                                // - Emprunter un ou plusieurs vélo
-                                case "1":
-
-                                    break;
-                                // - Connexion Client ou non
-                                // si abonné, propose missions VPLUS/VMOINS/VNUL
-                                // - choisi sa borne/velo?
-                                // Signale si client abonné qui prend son vélo s'il bénéficie d'une remise Vplus pour son prochain trajet
-                                // - Donner l'état du velo en panne ()
-
-                                // Rendre un velo loué
-                                // - Entrez code secret
-                                // - Entrer le numero de station (et voir si  station = vide)
-                                // - Donner l'état du velo en panne (HS ou OK)
-                                // - Signale si client abonné qui rend son vélo s'il bénéficie d'une remise Vplus pour son prochain trajet
-                                //  => Le client est débité du temps de location
-
-                            }
-                        }
-                    }else{
-                        System.out.println("La station "+n+" n'existe pas\n\n");
-                    }
-                    break;
                 case "2":
-                    //- voir des infos sur toutes les stations (nb vélos dans chaque station, le nombre de vélos endommagés, et le nombre de places libres)
-                    break;
+                    System.out.println("Veuillez saisir votre code secret :");
+                    long codeClient = scanner.nextInt();
+                    List<Location> locs = clientRepository.findLocationByClient(codeClient);
+                    for( Location l : locs) {
+                        System.out.println(l.toString());
+                    }
+                    System.out.println("Veuillez choisir la location que vous voulez deposer : ");
+                    long idLoc = scanner.nextInt();
+                    Location veloADeposer = locationRepository.findById(idLoc);
+                    Date now = Calendar.getInstance().getTime();
+                    veloADeposer.setDateRendu(now);
+                    entityManager.getTransaction().begin();
+                    entityManager.persist(veloADeposer);
+                    entityManager.getTransaction().commit();
+                    entityManager.detach(veloADeposer);
+
+
                 case "3":
                     //- s'abonner?
-                    break;
+
                 case "4":
                     //- quitter
                     d=false;
                     //reponse1.close();
-                    break;
+
                 default:
                     //- on recommence
             }
+
+
+
+
+
+            //Après avoir noté sa station
+
+            //- voir des infos sur la station (nb vélos , le nombre de vélos endommagés, et le nombre de places libres)
+            // - Emprunter un ou plusieurs vélo
+            // - Connexion Client ou non
+            // si abonné, propose missions VPLUS/VMOINS/VNUL
+            // - choisi sa borne/velo?
+            // Signale si client abonné qui prend son vélo s'il bénéficie d'une remise Vplus pour son prochain trajet
+            // - Donner l'état du velo en panne ()
+
+            // Rendre un velo loué
+            // - Entrez code secret
+            // - Entrer le numero de station (et voir si  station = vide)
+            // - Donner l'état du velo en panne (HS ou OK)
+            // - Signale si client abonné qui rend son vélo s'il bénéficie d'une remise Vplus pour son prochain trajet
+            //  => Le client est débité du temps de location
+
+            //- quitter
         }
     }
 
