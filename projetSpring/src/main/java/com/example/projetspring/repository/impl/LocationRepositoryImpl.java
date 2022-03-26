@@ -21,6 +21,13 @@ public class LocationRepositoryImpl extends BaseRepositoryImpl implements Locati
         super(entityManager);
     }
 
+    public void saveLocation(Location l){
+        entityManager.getTransaction().begin();
+        entityManager.persist(l);
+        entityManager.getTransaction().commit();
+        entityManager.detach(l);
+    }
+
     public Location findById(Long id) {
         return entityManager.find(Location.class, id);
     }

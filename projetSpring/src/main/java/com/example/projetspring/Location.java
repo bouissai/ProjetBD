@@ -43,11 +43,10 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location{" + "\n" +
-                "id=" + id + "\n" +
-                ", dateLocation=" + dateLocation + "\n" +
-                ", dateRendu =" + dateRendu + "\n" +
-                ", Velos=" + Velos + "\n" +
+        return "("+id+") - Location{" + "\n" +
+                "   - dateLocation=" + dateLocation + "\n" +
+                "   - dateRendu =" + dateRendu + "\n" +
+                "   - Velos=" + Velos + "\n" +
                 '}';
     }
 }

@@ -19,6 +19,7 @@ public class AbonneRepositoryImpl  extends BaseRepositoryImpl implements AbonneR
         super(entityManager);
     }
 
+    /*
     public void saveAbonne(String nom, String prenom, String adresse, Sexe sexe, LocalDate dateNais){
         Abonne a = new Abonne();
         a.setNom(nom);
@@ -33,6 +34,31 @@ public class AbonneRepositoryImpl  extends BaseRepositoryImpl implements AbonneR
         entityManager.getTransaction().commit();
         entityManager.detach(a);
 
+    }*/
+    public void saveAbonne(Abonne a){
+        entityManager.getTransaction().begin();
+        entityManager.persist(a);
+        entityManager.getTransaction().commit();
+        entityManager.detach(a);
     }
+
+    
+
+    public void updateAbonne(Abonne a){
+        entityManager.getTransaction().begin();
+        entityManager.persist(a);
+        entityManager.getTransaction().commit();
+        entityManager.detach(a);
+    }
+
+    public Abonne findById(int num){
+        return entityManager.find(Abonne.class, num);
+    }
+
+    /*
+    public Abonne trouverAbonne(int num){
+        return entityManager.createQuery("select a from Abonne a where a.num=?1", Abonne.class).setParameter(1,num).getSingleResult();
+
+    }*/
 
 }

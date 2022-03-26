@@ -20,6 +20,12 @@ public abstract class Client {
     @OneToMany
     private List<Location> loue = new ArrayList<Location>();
 
+
+    Client(int numeroCB){
+        this.numeroCB=numeroCB;
+    }
+
+
     public void setLoue(Location location){
         this.loue.add(location);
     }

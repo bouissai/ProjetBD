@@ -16,6 +16,13 @@ public class VeloRepositoryImpl extends BaseRepositoryImpl implements VeloReposi
         super(entityManager);
     }
 
+    public void saveVelo(Velo v){
+        entityManager.getTransaction().begin();
+        entityManager.persist(v);
+        entityManager.getTransaction().commit();
+        entityManager.detach(v);
+    }
+
     public Velo findById(Long id) {
         return entityManager.find(Velo.class, id);
     }

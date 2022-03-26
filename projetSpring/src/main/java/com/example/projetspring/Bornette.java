@@ -20,6 +20,9 @@ public class Bornette {
     @Column
     private boolean estPresent;
 
+    public boolean isEstPresent() {
+        return estPresent;
+    }
 
     public Etat getEtat() {
         return etat;

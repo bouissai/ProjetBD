@@ -13,7 +13,7 @@ public class Abonne extends Client{
     private LocalDate dateNaissance ;
     private Sexe sexe ;
     private String adresse ;
-    private Date dateAbonnement ;
+    private LocalDate dateAbonnement ;
 
 
 
@@ -57,11 +57,11 @@ public class Abonne extends Client{
         this.adresse = adresse;
     }
 
-    public Date getDateAbonnement() {
+    public LocalDate getDateAbonnement() {
         return dateAbonnement;
     }
 
-    public void setDateAbonnement(Date dateAbonnement) {
+    public void setDateAbonnement(LocalDate dateAbonnement) {
         this.dateAbonnement = dateAbonnement;
     }
 }

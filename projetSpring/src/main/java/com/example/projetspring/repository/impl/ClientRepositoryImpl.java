@@ -21,6 +21,12 @@ public class ClientRepositoryImpl extends BaseRepositoryImpl implements ClientRe
         super(entityManager);
     }
 
+    public void saveClient(Client c){
+        entityManager.getTransaction().begin();
+        entityManager.persist(c);
+        entityManager.getTransaction().commit();
+        entityManager.detach(c);
+    }
 
     public Client findById(int id) {
         return entityManager.find(Client.class, id);
