@@ -19,6 +19,10 @@ public class AbonneRepositoryImpl  extends BaseRepositoryImpl implements AbonneR
         super(entityManager);
     }
 
+    public Abonne findByNom(String nom ){
+        return (Abonne) entityManager.createQuery("Select A from Abonne A " +
+                "where A.nom=?1").setParameter(1,nom).getSingleResult();
+    }
     /*
     public void saveAbonne(String nom, String prenom, String adresse, Sexe sexe, LocalDate dateNais){
         Abonne a = new Abonne();

@@ -45,6 +45,12 @@ public class StationRepositoryImpl  extends BaseRepositoryImpl implements Statio
                 .setParameter(1,true)
                 .setParameter(2, Etat.OK).setParameter(3,Etat.OK).getResultList();
     }
+    public void saveVelo(Velo v){
+        entityManager.getTransaction().begin();
+        entityManager.persist(v);
+        entityManager.getTransaction().commit();
+        entityManager.detach(v);
+    }
 
     public int getNombreVeloParStation(Station station){
         int somme = 0 ;

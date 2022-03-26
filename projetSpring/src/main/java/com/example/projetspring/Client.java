@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 @Entity(name = "Client")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name ="Abonnement", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "Abonnement", discriminatorType = DiscriminatorType.STRING)
 public abstract class Client {
 
 
@@ -21,14 +22,15 @@ public abstract class Client {
     private List<Location> loue = new ArrayList<Location>();
 
 
-    Client(int numeroCB){
-        this.numeroCB=numeroCB;
+    Client(int numeroCB) {
+        this.numeroCB = numeroCB;
     }
 
 
-    public void setLoue(Location location){
+    public void setLoue(Location location) {
         this.loue.add(location);
     }
+
     public long getCodeSecret() {
         return codeSecret;
     }
@@ -37,7 +39,7 @@ public abstract class Client {
         return numeroCB;
     }
 
-    public void setNumeroCB(int numeroCB){
+    public void setNumeroCB(int numeroCB) {
         this.numeroCB = numeroCB;
     }
 }

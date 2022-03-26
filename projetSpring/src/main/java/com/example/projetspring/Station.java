@@ -36,6 +36,10 @@ public class Station {
     }*/
 
     public String getAdresse() {
+        //Retourne ""
+        if(adresse==null){
+            return " ";
+        }
         return adresse;
     }
 
