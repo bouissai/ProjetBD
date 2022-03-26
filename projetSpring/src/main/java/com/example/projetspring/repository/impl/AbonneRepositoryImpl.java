@@ -55,10 +55,10 @@ public class AbonneRepositoryImpl  extends BaseRepositoryImpl implements AbonneR
         return entityManager.find(Abonne.class, num);
     }
 
-    /*
-    public Abonne trouverAbonne(int num){
-        return entityManager.createQuery("select a from Abonne a where a.num=?1", Abonne.class).setParameter(1,num).getSingleResult();
 
-    }*/
+    public Abonne trouverAbonne(int num){
+        return entityManager.createQuery("select a from Abonne a where a.nom=?1", Abonne.class).setParameter(1,num).getSingleResult();
+
+    }
 
 }

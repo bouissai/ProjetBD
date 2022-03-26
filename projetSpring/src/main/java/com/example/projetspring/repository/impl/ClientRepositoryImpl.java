@@ -32,6 +32,7 @@ public class ClientRepositoryImpl extends BaseRepositoryImpl implements ClientRe
         return entityManager.find(Client.class, id);
     }
 
+        /*
     public void clientLoueUnVelo(Client client, Velo velo){
         Location l = new Location();
         Date today = Calendar.getInstance().getTime();
@@ -42,7 +43,7 @@ public class ClientRepositoryImpl extends BaseRepositoryImpl implements ClientRe
         entityManager.detach(l);
         velo.setLocation(l);
         client.setLoue(l);
-    }
+    }*/
 
     public List<Location> findLocationByClient(long codeSecret){
         final List<Location> locations = entityManager.createQuery("select c.loue from Client c join c.loue l  where l.dateRendu = null").getResultList();

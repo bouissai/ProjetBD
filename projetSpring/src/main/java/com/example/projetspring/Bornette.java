@@ -20,6 +20,10 @@ public class Bornette {
     @Column
     private boolean estPresent;
 
+    public Bornette(){
+        setEtat(Etat.OK);
+    }
+
     public boolean isEstPresent() {
         return estPresent;
     }
@@ -37,7 +41,14 @@ public class Bornette {
     }
 
     public void setPropose(Velo velo) {
-        this.Propose = velo;
+
+        if(velo == null){
+            this.Propose = null;
+            setEstPresent(false);
+        }else{
+            this.Propose = velo;
+            setEstPresent(true);
+        }
     }
 
     public boolean estPresent() {

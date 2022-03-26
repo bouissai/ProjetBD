@@ -23,7 +23,7 @@ public class Location {
     private List<Velo> Velos ;
 
     private double prixLoc;
-
+    private boolean prime=false;
     public Long getId() {
         return id;
     }
@@ -36,8 +36,16 @@ public class Location {
         return dateRendu;
     }
 
+    public boolean isPrime() {
+        return prime;
+    }
+
     public void setDateLocation(Date date){
         this.dateLocation = date;
+    }
+
+    public void setPrime(boolean prime) {
+        this.prime = prime;
     }
 
     /*
@@ -47,7 +55,8 @@ public class Location {
 
     public void setDateRendu(Date dateRendu) {
         double prixLocation = 0;
-        double heureLocation = ( dateRendu.getTime() - this.dateLocation.getTime()) / (3.6*(Math.pow(10,6))) ;
+        double heureLocation = Math. floor(( dateRendu.getTime() - this.dateLocation.getTime()) / (3.6*(Math.pow(10,6))))+1 ;
+
         for (Velo v: this.Velos) {
             prixLocation += prixLocation + (v.getPrix() * heureLocation);
         }

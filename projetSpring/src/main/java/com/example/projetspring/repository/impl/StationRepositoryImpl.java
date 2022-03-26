@@ -19,6 +19,12 @@ public class StationRepositoryImpl  extends BaseRepositoryImpl implements Statio
         super(entityManager);
     }
 
+    public void saveStation(Station s){
+        entityManager.getTransaction().begin();
+        entityManager.persist(s);
+        entityManager.getTransaction().commit();
+        entityManager.detach(s);
+    }
     public Station findById(Long id) {
         return entityManager.find(Station.class, id);
     }
@@ -54,7 +60,7 @@ public class StationRepositoryImpl  extends BaseRepositoryImpl implements Statio
         int somme = 0 ;
         for( int i =0 ; i < station.getContient().size() ; i++){
             if(station.getContient().get(i).getPropose()!=null) {
-                if (!(station.getContient().get(i).getPropose().getEtat() == Etat.HS)) {
+                if ((station.getContient().get(i).getPropose().getEtat().equals(Etat.HS))) {
                     somme++;
                 }
             }
@@ -63,7 +69,15 @@ public class StationRepositoryImpl  extends BaseRepositoryImpl implements Statio
     }
 
     public int getNombreVeloOKByStation( Station station){
-        return  getNombreVeloParStation( station ) - getNombreVeloEndommageByStation(  station) ;
+        int somme = 0 ;
+        for( int i =0 ; i < station.getContient().size() ; i++){
+            if(station.getContient().get(i).getPropose()!=null) {
+                if ((station.getContient().get(i).getPropose().getEtat().equals(Etat.OK))) {
+                    somme++;
+                }
+            }
+        }
+        return somme;
     }
 
 

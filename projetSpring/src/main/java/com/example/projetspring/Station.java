@@ -31,9 +31,9 @@ public class Station {
         this.id = id;
     }
 
-    public String getStatut() {
+    /*public String getStatut() {
         return adresse;
-    }
+    }*/
 
     public String getAdresse() {
         return adresse;
