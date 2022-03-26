@@ -25,4 +25,12 @@ public class NonAbonneRepositoryImpl  extends BaseRepositoryImpl implements NonA
     public void delete(NonAbonne nonAbonne) {
         entityManager.remove(nonAbonne);
     }
+
+    public void save(Client na, int numCarte){
+        na.setNumeroCB(numCarte);
+        entityManager.getTransaction().begin();
+        entityManager.persist(na);
+        entityManager.getTransaction().commit();
+        entityManager.detach(na);
+    }
 }

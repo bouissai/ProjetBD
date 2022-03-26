@@ -35,4 +35,16 @@ public class AbonneRepositoryImpl  extends BaseRepositoryImpl implements AbonneR
 
     }
 
+    public void updateAbonne(Abonne a){
+        entityManager.getTransaction().begin();
+        entityManager.persist(a);
+        entityManager.getTransaction().commit();
+        entityManager.detach(a);
+    }
+
+    public Abonne trouverAbonne(String nom){
+        return entityManager.createQuery("select a from Abonne a where a.nom=?1", Abonne.class).setParameter(1,nom).getSingleResult();
+
+    }
+
 }

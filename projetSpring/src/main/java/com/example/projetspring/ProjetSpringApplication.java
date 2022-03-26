@@ -130,6 +130,10 @@ public class ProjetSpringApplication {
         LocationRepositoryImpl locationRepository = (LocationRepositoryImpl) daoFactory.newLocationRepository(entityManager);
         NonAbonneRepositoryImpl nonAbonneRepository =(NonAbonneRepositoryImpl) daoFactory.newNonAbonneRepository(entityManager);
         AbonneRepositoryImpl abonneRepository = (AbonneRepositoryImpl) daoFactory.newAbonneRepository(entityManager);
+
+        //pour test
+
+        abonneRepository.saveAbonne("begimay","begimay","10 rue...", Sexe.FEMME, null);
         //lancement MENU INTERFACE
         LocalDate todaysDate = LocalDate.now();
         Scanner scanner = new Scanner(System.in);
@@ -159,17 +163,23 @@ public class ProjetSpringApplication {
 
                     System.out.println(" Veuillez choisir un velo : ");
                     long numVelo = scanner.nextInt();
-
-                    System.out.println("Veuillez saisir le numero de votre CB :");
-                    int numCarte = scanner.nextInt();
-
-                    Client na1 = new NonAbonne();
-                    na1.setNumeroCB(numCarte);
-                    clientRepository.clientLoueUnVelo(na1, veloRepository.findById(numVelo));
-                    entityManager.getTransaction().begin();
-                    entityManager.persist(na1);
-                    entityManager.getTransaction().commit();
-                    entityManager.detach(na1);
+                    System.out.println("Etes-vous abonné a notre service ?(oui/non) ");
+                    String repAbonnement = scanner.next();
+                    if(repAbonnement.equals("oui")){
+                        System.out.println("Veuillez saisir votre nom :");
+                        String nomAbonne = scanner.next();
+                        Abonne a1 = abonneRepository.trouverAbonne(nomAbonne);
+                        clientRepository.clientLoueUnVelo(a1, veloRepository.findById(numVelo));
+                        abonneRepository.updateAbonne(a1);
+                    }
+                    if(repAbonnement.equals("non")) {
+                        System.out.println("Veuillez saisir le numero de votre CB :");
+                        int numCarte = scanner.nextInt();
+                        Client na1 = new NonAbonne();
+                        clientRepository.clientLoueUnVelo(na1, veloRepository.findById(numVelo));
+                        nonAbonneRepository.save(na1, numCarte);
+                    }
+                    break;
 
                 case "2":
                     System.out.println("Veuillez saisir votre code secret :");
@@ -187,7 +197,7 @@ public class ProjetSpringApplication {
                     entityManager.persist(veloADeposer);
                     entityManager.getTransaction().commit();
                     entityManager.detach(veloADeposer);
-
+                    break;
 
                 case "3":
                     //- s'abonner?
@@ -213,6 +223,7 @@ public class ProjetSpringApplication {
                         sexe = Sexe.FEMME;
                     }
                     abonneRepository.saveAbonne(nom, prenom, adresse,sexe, dateNais);
+                    break;
                 case "4":
                     //- quitter
                     d=false;
