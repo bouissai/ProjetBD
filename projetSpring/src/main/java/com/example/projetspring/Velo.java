@@ -21,6 +21,7 @@ public class Velo {
         private Marque modele ;
         private Date dateMisesEnService ;
         private Etat etat ;
+        private int prix;
 
 
 
@@ -33,6 +34,13 @@ public class Velo {
 
         public void setModele(Marque modele) {
             this.modele = modele;
+            switch (this.modele) {
+                case VTT: this.prix = 20; break;
+                case BTWIB: this.prix = 10; break;
+                case LOOK: this.prix = 6; break;
+                case PEUGEOT: this.prix = 5; break;
+                default: this.prix = 50; break;
+            }
         }
 
         public Date getDateMisesEnService() {
@@ -69,5 +77,11 @@ public class Velo {
                 ", etat=" + etat + "\n" +
                 '}';
     }
+
+    public double getPrix() {
+        return this.prix;
+    }
+
+
 }
 

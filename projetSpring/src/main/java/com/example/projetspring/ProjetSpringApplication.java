@@ -314,8 +314,8 @@ public class ProjetSpringApplication {
                                         int numCarte = scanner.nextInt();
 
                                         //cree un nonAbonne
-                                        Client nonAbonneSelected = new NonAbonne();
-                                        nonAbonneSelected.setNumeroCB(numCarte);
+                                        Client nonAbonneSelected = new NonAbonne(numCarte);
+                                        //nonAbonneSelected.setNumeroCB(numCarte);
                                         System.out.println("> Carte enregistrée");
 
                                         //ajoute location dans la bd
@@ -353,12 +353,14 @@ public class ProjetSpringApplication {
                                 }
                                 System.out.println("> Veuillez choisir la location que vous voulez deposer : ");
                                 long idLoc = scanner.nextInt();
-                                Location veloADeposer = locationRepository.findById(idLoc);
+                                Location locationSelected = locationRepository.findById(idLoc);
                                 Date now = Calendar.getInstance().getTime();
-                                veloADeposer.setDateRendu(now);
+                                locationSelected.setDateRendu(now);
+                                
+                                System.out.println("> Vous avez payé :"+locationSelected.getPrixLoc());
 
                                 //save location dans la bd
-                                locationRepository.saveLocation(veloADeposer);
+                                locationRepository.saveLocation(locationSelected);
 
                                 break;
                         
@@ -420,9 +422,6 @@ public class ProjetSpringApplication {
 
                     System.out.println("\n> Abonnement \n");
 
-                    //cree un nouvel abo
-                    Abonne abonneRegistered = new Abonne();
-
                     //demande infos personnelles
                     System.out.println("> Veuillez saisir votre nom : ");
                     String nom = scanner.next();
@@ -444,6 +443,10 @@ public class ProjetSpringApplication {
                     System.out.println("> numéro de carte bancaire");
                     int numeroCB  = scanner.nextInt();
 
+                    
+                    //cree un nouvel abo
+                    Abonne abonneRegistered = new Abonne(numeroCB);
+
                     //set les infos dans le nouvel objet abo
                     abonneRegistered.setNom(nom);
                     abonneRegistered.setPrenom(prenom);
@@ -451,7 +454,6 @@ public class ProjetSpringApplication {
                     abonneRegistered.setSexe(sexe);
                     abonneRegistered.setDateNaissance(dateNais);
                     abonneRegistered.setDateAbonnement(todaysDate);
-                    abonneRegistered.setNumeroCB(numeroCB);
 
                     
                     //save l'abonné

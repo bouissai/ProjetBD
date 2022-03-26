@@ -15,7 +15,9 @@ public class Abonne extends Client{
     private String adresse ;
     private LocalDate dateAbonnement ;
 
-
+    Abonne(int numeroCB){
+        super(numeroCB);
+    }
 
     public String getNom() {
         return nom;

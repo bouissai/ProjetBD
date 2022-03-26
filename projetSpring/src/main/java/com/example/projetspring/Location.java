@@ -18,8 +18,11 @@ public class Location {
     @Column
     private Date dateRendu ;
 
+
     @OneToMany(mappedBy = "location")
     private List<Velo> Velos ;
+
+    private double prixLoc;
 
     public Long getId() {
         return id;
@@ -37,8 +40,24 @@ public class Location {
         this.dateLocation = date;
     }
 
+    /*
     public void setDateRendu(Date dateRendu) {
         this.dateRendu = dateRendu;
+    }*/
+
+    public void setDateRendu(Date dateRendu) {
+        double prixLocation = 0;
+        double heureLocation = ( dateRendu.getTime() - this.dateLocation.getTime()) / (3.6*(Math.pow(10,6))) ;
+        for (Velo v: this.Velos) {
+            prixLocation += prixLocation + (v.getPrix() * heureLocation);
+        }
+
+        this.prixLoc = prixLocation;
+        this.dateRendu = dateRendu;
+    }
+
+    public double getPrixLoc() {
+        return prixLoc;
     }
 
     @Override

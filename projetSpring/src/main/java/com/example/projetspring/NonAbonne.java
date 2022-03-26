@@ -13,5 +13,8 @@ import javax.persistence.NamedQuery;
 )
 public class NonAbonne extends Client{
 
+        NonAbonne(int numeroCB){
+                super(numeroCB);
+        }
 
 }
