@@ -228,11 +228,8 @@ public class ProjetSpringApplication {
         stationRepository.saveStation(station2);
         stationRepository.saveStation(station3);
 
-        //lancement MENU INTERFACE
-        LocalDate todaysDate = LocalDate.now();
-        Scanner scanner = new Scanner(System.in);
-        String reponse1;
 
+        //création abonnés
         Abonne abonne_1 = new Abonne();
         abonne_1.setDateAbonnement(LocalDate.ofEpochDay(2016-07-17));
         abonne_1.setNom("Crivoi");
@@ -257,7 +254,10 @@ public class ProjetSpringApplication {
         abonne_3.setSexe(Sexe.HOMME);
         abonneRepository.saveAbonne(abonne_3);
 
-
+        //lancement MENU INTERFACE
+        LocalDate todaysDate = LocalDate.now();
+        Scanner scanner = new Scanner(System.in);
+        String reponse1;
 
 
         boolean d=true;
@@ -268,8 +268,6 @@ public class ProjetSpringApplication {
             System.out.println("> Nous sommes le "+todaysDate);
             System.out.println("> ");
             System.out.println("> Que voulez-vous faire?");
-            //System.out.println("(1) - Emprunter un velo ");
-            //System.out.println("(2) - Rendre un velo");
             System.out.println("(1) - Entrer dans une station ");
             System.out.println("(2) - Voir l'état de toutes les stations");
             System.out.println("(3) - S'abonner");
@@ -298,6 +296,7 @@ public class ProjetSpringApplication {
                     String reponse2;
                     boolean d2=true;
                     while(d2){
+
                         //Dans le menu station on doit pouvoir :
                             //- voir des infos sur la station (nb vélos , le nombre de vélos endommagés, et le nombre de places libres)
                             // - Emprunter un ou plusieurs vélo
