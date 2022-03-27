@@ -116,9 +116,9 @@ public class ProjetSpringApplication {
         Velo velo8=new Velo();
         Velo velo9=new Velo();
         Velo velo10=new Velo();
-        Velo velo11=new Velo();
+      /*  Velo velo11=new Velo();
         Velo velo12=new Velo();
-        Velo velo13=new Velo();
+        Velo velo13=new Velo();*/
 
         //initialisation velo
         velo1.setModele(Marque.VTT);
@@ -141,12 +141,12 @@ public class ProjetSpringApplication {
         velo9.setEtat(Etat.OK);
         velo10.setModele(Marque.PEUGEOT);
         velo10.setEtat(Etat.OK);
-        velo11.setModele(Marque.VTT);
+     /*   velo11.setModele(Marque.VTT);
         velo11.setEtat(Etat.OK);
         velo12.setModele(Marque.PEUGEOT);
         velo12.setEtat(Etat.OK);
         velo13.setModele(Marque.PEUGEOT);
-        velo13.setEtat(Etat.OK);
+        velo13.setEtat(Etat.OK);*/
 
         //sauvegarde velo dans la BD
         veloRepository.saveVelo(velo1);
@@ -159,9 +159,9 @@ public class ProjetSpringApplication {
         veloRepository.saveVelo(velo8);
         veloRepository.saveVelo(velo9);
         veloRepository.saveVelo(velo10);
-        veloRepository.saveVelo(velo11);
+       /* veloRepository.saveVelo(velo11);
         veloRepository.saveVelo(velo12);
-        veloRepository.saveVelo(velo13);
+        veloRepository.saveVelo(velo13);*/
 
 
         // bornettes -> velos
@@ -176,9 +176,10 @@ public class ProjetSpringApplication {
         bornette11.setPropose(velo8);
         bornette12.setPropose(velo9);
         bornette13.setPropose(velo10);
-        bornette3.setPropose(velo11);
+     /*   bornette3.setPropose(velo11);
         bornette4.setPropose(velo12);
-        bornette5.setPropose(velo13);
+        bornette5.setPropose(velo13);*/
+
         //sauvegarde bornette dans la BD
         bornetteRepository.saveBornette(bornette1);
         bornetteRepository.saveBornette(bornette2);
@@ -317,7 +318,11 @@ public class ProjetSpringApplication {
                         System.out.println("> Etat des bornes :");
                         stationSelected.getContient().forEach(bornette -> {
                                 if(bornette.isEstPresent()) {
-                                    if(bornette.getPropose().getEtat().equals(Etat.OK) ){
+                                   if(bornette.getPropose()==null){
+                                       System.out.println("    - B n°"+bornette.getNumeroBorn()+" Vide pour le moment");
+                                       System.out.println("        - etat : "+bornette.getEtat());
+                                   }
+                                   else if(bornette.getPropose().getEtat().equals(Etat.OK) ){
                                         System.out.println("    - B n°"+bornette.getNumeroBorn());
                                         System.out.println("        - etat : "+bornette.getEtat());
                                         System.out.println("        - place : vélo "+ bornette.getPropose().getModele()+" disponible");
