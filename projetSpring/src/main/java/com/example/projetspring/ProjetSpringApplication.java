@@ -421,7 +421,9 @@ public class ProjetSpringApplication {
                                         location.setNumeroClient( abonneSelected.getCodeSecret() );
                                         veloSelected.setLocation(location);
                                         abonneSelected.setLoue(location);
+
                                         locationRepository.saveLocation(location);
+                                        abonneRepository.saveAbonne(abonneSelected);
                                         System.out.println("> Vélo loué");
                                         var input = scanner.next();
                                 }
@@ -470,7 +472,9 @@ public class ProjetSpringApplication {
                                         location.setDateLocation(today);
                                         veloSelected.setLocation(location);
                                         nonAbonneSelected.setLoue(location);
+
                                         locationRepository.saveLocation(location);
+                                        nonAbonneRepository.save( nonAbonneSelected, nonAbonneSelected.getNumeroCB());
                                         System.out.println("> Vélo loué");
                                         var input = scanner.next();
                                     }
