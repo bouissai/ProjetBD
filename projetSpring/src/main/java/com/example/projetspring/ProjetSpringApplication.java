@@ -1,5 +1,5 @@
 package com.example.projetspring;
-
+import java.lang.Thread;
 import com.example.projetspring.repository.RepositoryFactory;
 import com.example.projetspring.repository.impl.*;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +16,7 @@ import static com.example.projetspring.Statut.*;
 @SpringBootApplication
 public class ProjetSpringApplication {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         //connexion à la BD
         SpringApplication.run(ProjetSpringApplication.class, args);
 
@@ -78,11 +78,11 @@ public class ProjetSpringApplication {
         bornette1.setEtat(Etat.OK);
         bornette2.setEstPresent(true);
         bornette2.setEtat(Etat.OK);
-        bornette3.setEstPresent(true);
+        bornette3.setEstPresent(false);
         bornette3.setEtat(Etat.OK);
-        bornette4.setEstPresent(true);
+        bornette4.setEstPresent(false);
         bornette4.setEtat(Etat.OK);
-        bornette5.setEstPresent(true);
+        bornette5.setEstPresent(false);
         bornette5.setEtat(Etat.OK);
         bornette6.setEstPresent(true);
         bornette6.setEtat(Etat.OK);
@@ -100,9 +100,9 @@ public class ProjetSpringApplication {
         bornette12.setEtat(Etat.OK);
         bornette13.setEstPresent(true);
         bornette13.setEtat(Etat.OK);
-        bornette14.setEstPresent(true);
+        bornette14.setEstPresent(false);
         bornette14.setEtat(Etat.OK);
-        bornette15.setEstPresent(true);
+        bornette15.setEstPresent(false);
         bornette15.setEtat(Etat.OK);
 
         //instantiation velo
@@ -298,15 +298,16 @@ public class ProjetSpringApplication {
                         System.out.println("    - adresse : "+stationSelected.getAdresse());
                         System.out.println("    - nombre de vélos disponibles : "+stationRepository.getNombreVeloOKByStation(stationSelected));
                         System.out.println("    - nombre de vélos endommagés : "+stationRepository.getNombreVeloEndommageByStation(stationSelected));
-                        System.out.println("    - nombre de places vides : "+(stationSelected.getContient().size()-stationRepository.getNombreVeloParStation(stationSelected)));
+
+                        System.out.println("    - nombre de places vides : "+(stationRepository.getNombrePlaceLibreParBornette(stationSelected)));
                         System.out.println("    - statut : "+stationSelected.getStatus());
                         System.out.println(">");
 
-                        if(stationSelected.getStatus().equals(VMOINS.toString())){
+                        if(stationSelected.getStatus().equals(VPLUS.toString())){
                             System.out.println("> Pour les abonnées :");
                             System.out.println("    - si vous RAMENEZ des vélos dans cette station vous aurez une PROMOTION");
                         }
-                        else if(stationSelected.getStatus().equals(VPLUS.toString())){
+                        else if(stationSelected.getStatus().equals(VMOINS.toString())){
                             System.out.println("> Pour les abonnées :");
                             System.out.println("    - si vous EMMENEZ des vélos dans d'AUTRES STATIONS vous aurez une PROMOTION");
                         }else{
@@ -317,7 +318,7 @@ public class ProjetSpringApplication {
                         
                         System.out.println("> Etat des bornes :");
                         stationSelected.getContient().forEach(bornette -> {
-                                if(bornette.isEstPresent()) {
+                                if(bornette.estPresent()) {
                                    if(bornette.getPropose()==null){
                                        System.out.println("    - B n°"+bornette.getNumeroBorn()+" Vide pour le moment");
                                        System.out.println("        - etat : "+bornette.getEtat());
@@ -365,14 +366,24 @@ public class ProjetSpringApplication {
                                     Abonne abonneSelected = abonneRepository.findById(numClient);
                                     int compteur_erreur = 1 ;
                                     while(abonneSelected == null){
+                                        if(compteur_erreur==3){
+                                            System.out.println("Vous avez depassé le nombre de tentatives ");
+                                            Thread.sleep(3000);
+                                            repAbonnement="non";
+                                            break ;
+                                        }
                                         System.out.println("Pas le bon numéro de client , ressayer svp ");
-                                        System.out.println("Nombre de tentatives "+compteur_erreur);
+                                        System.out.println("Nombre de tentatives "+(3-compteur_erreur));
                                          numClient = scanner.nextLong();
                                          abonneSelected = abonneRepository.findById(numClient);
-                                         if(compteur_erreur==3){
 
-                                         }
                                          compteur_erreur++;
+                                    }
+                                    //Connexion n'est pas reusite
+                                    if(compteur_erreur==3){
+
+                                        break;
+
                                     }
                                     System.out.println("> Connexion réussite");
                                     System.out.println("Bonjour "+abonneSelected.getPrenom()+" "+abonneSelected.getNom());
@@ -382,7 +393,7 @@ public class ProjetSpringApplication {
                                         System.out.println("> Voici les vélos disponibles : ");
                                         stationSelected.getContient().forEach(bornette -> {
 
-                                                    if ( (bornette.getPropose()!=null) &&(bornette.getEtat().equals(Etat.OK) && bornette.isEstPresent())&&((bornette.getPropose().getEtat() == Etat.OK))) {
+                                                    if ( (bornette.getPropose()!=null) &&(bornette.getEtat().equals(Etat.OK) && bornette.estPresent())&&((bornette.getPropose().getEtat() == Etat.OK))) {
                                                         System.out.println("(" + bornette.getPropose().getNumeroVelo() + ")  - vélo " + bornette.getPropose().getModele() + " (à la bornette n°" + bornette.getNumeroBorn() + ")");
                                                     }
                                                 }
@@ -398,19 +409,25 @@ public class ProjetSpringApplication {
 
                                         // Ajout location dans la bd
                                         Location location = new Location();
-                                        if(stationSelected.getStatus().equals(VPLUS)){
+
+                                        //On set la prime si VPLUS
+                                        if(stationSelected.getStatus().equals(VMOINS)){
+                                            System.out.println("Bravo vous contribuez à la mission de régulation citoyen");
                                             System.out.println("> Vous serez deduis de 10% lors du trajet");
                                             location.setPrime(true);
                                         }
                                         Date today = Calendar.getInstance().getTime();
                                         location.setDateLocation(today);
+                                        location.setNumeroClient( abonneSelected.getCodeSecret() );
                                         veloSelected.setLocation(location);
                                         abonneSelected.setLoue(location);
                                         locationRepository.saveLocation(location);
                                         System.out.println("> Vélo loué");
+                                        var input = scanner.next();
                                 }
                                 else{
                                     System.out.println("> Aucun vélo disponible : ");
+                                    var input = scanner.next();
                                 }}
 
                                 //////////////////////
@@ -430,8 +447,8 @@ public class ProjetSpringApplication {
                                         // Affichage vélos dispo
                                         System.out.println("> Voici les vélos disponibles : ");
                                         stationSelected.getContient().forEach(bornette -> {
-                                                    if ((bornette.getEtat().equals(Etat.OK) && bornette.isEstPresent())&&((bornette.getPropose().getEtat() == Etat.OK))) {
-                                                        System.out.println("(" + bornette.getPropose().getNumeroVelo() + ")  - vélo " + bornette.getPropose().getModele() + " (à la bornette n°" + bornette.getNumeroBorn() + ")");
+                                                    if ((bornette.getPropose()!=null)&&(bornette.getEtat().equals(Etat.OK) && bornette.estPresent())&&((bornette.getPropose().getEtat() == Etat.OK))) {
+                                                        System.out.println("(" + bornette.getPropose().getNumeroVelo() + ")  - vélo " + bornette.getPropose().getModele() +" (à la bornette n°" + bornette.getNumeroBorn() + ")");
                                                     }
                                                 }
                                         );
@@ -444,25 +461,40 @@ public class ProjetSpringApplication {
                                         bornetteVeloLoue.setPropose(null);
                                         bornetteRepository.saveBornette(bornetteVeloLoue);
                                         System.out.println("Retenez votre code pour rendre le vélo à la fin : "+nonAbonneSelected.getCodeSecret()) ;
+
                                         // Ajout location dans la bd
+
                                         Location location = new Location();
+                                        location.setNumeroClient( nonAbonneSelected.getCodeSecret() );
                                         Date today = Calendar.getInstance().getTime();
                                         location.setDateLocation(today);
                                         veloSelected.setLocation(location);
                                         nonAbonneSelected.setLoue(location);
                                         locationRepository.saveLocation(location);
                                         System.out.println("> Vélo loué");
+                                        var input = scanner.next();
                                     }
                                     else{
                                         System.out.println("> Aucun vélo disponible : ");
+                                        var input = scanner.next();
                                     }
 
                                     // Maj du statut de la station après location
-                                    //if(stationRepository.getNombreVeloOKByStation(stationSelected)>=stationRepository.)
+                                    if(
+                                            stationRepository.getNombrePlaceLibreParBornette(stationSelected)<=1) {
+                                        stationSelected.setStatus(VMOINS);
+                                    }
+                                    else if(stationRepository.getNombrePlaceLibreParBornette(stationSelected)>=4){
+                                        stationSelected.setStatus(VPLUS);
+                                    }
+                                    else {
+                                        stationSelected.setStatus(VNUL);
+                                    }
 
                                 }
                                 else{
                                     System.out.println("> Erreur identification ");
+                                    var input = scanner.next();
                                 }
                                 break;
 
@@ -481,7 +513,7 @@ public class ProjetSpringApplication {
 
                                 System.out.println("\n> Rendre \n");
                                 System.out.println("Introduisez le numéro de station où vous vous situez");
-                                boolean prime = false ; //Si statut Vmoins alors prime = true
+                                boolean prime = false ; //Si statut VPLUS alors prime = true
 
                                 long codeStation = scanner.nextInt();
                                 var Station = stationRepository.findById(codeStation);
@@ -489,7 +521,7 @@ public class ProjetSpringApplication {
                                     System.out.println("La station est pleine , vous pouvez pas rendre le vélo ici");
                                 }
 
-                                else if(Station.getStatus()== VMOINS){
+                                else if(Station.getStatus()== VPLUS){
                                     System.out.println("Vous avez gagnez une prime");
                                     prime=true;
                                 }

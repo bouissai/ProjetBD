@@ -24,6 +24,7 @@ public class Location {
 
     private double prixLoc;
     private boolean prime=false;
+    private Long numeroClient;
     public Long getId() {
         return id;
     }
@@ -52,6 +53,14 @@ public class Location {
     public void setDateRendu(Date dateRendu) {
         this.dateRendu = dateRendu;
     }*/
+
+    public Long getNumeroClient() {
+        return numeroClient;
+    }
+
+    public void setNumeroClient(Long numeroClient) {
+        this.numeroClient = numeroClient;
+    }
 
     public void setDateRendu(Date dateRendu) {
         double prixLocation = 0;

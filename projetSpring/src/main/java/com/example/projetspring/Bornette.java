@@ -24,9 +24,7 @@ public class Bornette {
         setEtat(Etat.OK);
     }
 
-    public boolean isEstPresent() {
-        return estPresent;
-    }
+
 
     public Etat getEtat() {
         return etat;

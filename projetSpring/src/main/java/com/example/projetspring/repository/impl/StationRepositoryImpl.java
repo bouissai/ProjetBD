@@ -61,7 +61,16 @@ public class StationRepositoryImpl  extends BaseRepositoryImpl implements Statio
         }
         return somme ;
     }
+    public int getNombrePlaceLibreParBornette( Station station){
+        int somme = 0 ;
+        for (Bornette b:station.getContient()) {
+            if( (!b.estPresent()) && b.getEtat().equals(Etat.OK) ){
+                somme++;
+            }
 
+        }
+        return somme;
+    }
     public int getNombreVeloEndommageByStation( Station station){
         int somme = 0 ;
         for( int i =0 ; i < station.getContient().size() ; i++){
