@@ -26,6 +26,10 @@ public abstract class Client {
         this.numeroCB = numeroCB;
     }
 
+    public Client() {
+
+    }
+
 
     public void setLoue(Location location) {
         this.loue.add(location);

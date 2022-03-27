@@ -360,17 +360,29 @@ public class ProjetSpringApplication {
                                 ////////////////////
                                 if(repAbonnement.equals("oui")) {
                                     // Demande num abonne
-                                    System.out.println("> Veuillez saisir votre numero client :");
-                                    int numClient = scanner.nextInt();
+                                    System.out.println("> Veuillez saisir votre numero client : Vous avez 3 tentatives");
+                                    Long numClient = scanner.nextLong();
                                     Abonne abonneSelected = abonneRepository.findById(numClient);
-                                    System.out.println("> Connexion réussite");
+                                    int compteur_erreur = 1 ;
+                                    while(abonneSelected == null){
+                                        System.out.println("Pas le bon numéro de client , ressayer svp ");
+                                        System.out.println("Nombre de tentatives "+compteur_erreur);
+                                         numClient = scanner.nextLong();
+                                         abonneSelected = abonneRepository.findById(numClient);
+                                         if(compteur_erreur==3){
 
+                                         }
+                                         compteur_erreur++;
+                                    }
+                                    System.out.println("> Connexion réussite");
+                                    System.out.println("Bonjour "+abonneSelected.getPrenom()+" "+abonneSelected.getNom());
                                     // Verifie si y a des velo dispo
                                     if(stationRepository.getNombreVeloOKByStation(stationSelected)!=0) {
                                         // Affichage vélos dispo
                                         System.out.println("> Voici les vélos disponibles : ");
                                         stationSelected.getContient().forEach(bornette -> {
-                                                    if ((bornette.getEtat().equals(Etat.OK) && bornette.isEstPresent())&&((bornette.getPropose().getEtat() == Etat.OK))) {
+
+                                                    if ( (bornette.getPropose()!=null) &&(bornette.getEtat().equals(Etat.OK) && bornette.isEstPresent())&&((bornette.getPropose().getEtat() == Etat.OK))) {
                                                         System.out.println("(" + bornette.getPropose().getNumeroVelo() + ")  - vélo " + bornette.getPropose().getModele() + " (à la bornette n°" + bornette.getNumeroBorn() + ")");
                                                     }
                                                 }

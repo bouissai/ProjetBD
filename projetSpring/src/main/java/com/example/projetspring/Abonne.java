@@ -19,6 +19,11 @@ public class Abonne extends Client{
         super(numeroCB);
     }
 
+    public Abonne() {
+        super();
+    }
+
+
     public String getNom() {
         return nom;
     }
@@ -38,6 +43,8 @@ public class Abonne extends Client{
     public LocalDate getDateNaissance() {
         return dateNaissance;
     }
+
+
 
     public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;

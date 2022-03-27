@@ -55,8 +55,8 @@ public class AbonneRepositoryImpl  extends BaseRepositoryImpl implements AbonneR
         entityManager.detach(a);
     }
 
-    public Abonne findById(int num){
-        return entityManager.find(Abonne.class, num);
+    public Abonne findById( long codesecret){
+        return entityManager.find(Abonne.class, codesecret);
     }
 
 
