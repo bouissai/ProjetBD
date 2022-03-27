@@ -844,7 +844,64 @@ public class ProjetSpringApplication {
 
                 // Voir etat de toutes les stations
                 case "2":
+                    List<Station>  x = stationRepository.getAll();
+                    int index2 = 1;
+                    for (Station s : x) {
 
+                        //affichage info station entrée
+                        System.out.println("----------------------------------------");
+                        System.out.println("> INFO STATION "+index2+"  \n");
+                        index2++;
+                        System.out.println(">");
+                        Thread.sleep(1000);
+                        System.out.println("> Etat station :");
+                        System.out.println("    - adresse : "+s.getAdresse());
+                        System.out.println("    - nombre de vélos disponibles : "+stationRepository.getNombreVeloOKByStation(s));
+                        System.out.println("    - nombre de vélos endommagés : "+stationRepository.getNombreVeloEndommageByStation(s));
+                        System.out.println("    - nombre de places vides : "+(stationRepository.getNombrePlaceLibreParBornette(s)));
+                        System.out.println("    - statut : "+s.getStatus());
+                        System.out.println(">");
+
+                        if(s.getStatus().equals(VPLUS.toString())){
+                            System.out.println("> Pour les abonnées :");
+                            System.out.println("    - si vous RAMENEZ des vélos dans cette station vous aurez une PROMOTION");
+                        }
+                        else if(s.getStatus().equals(VMOINS.toString())){
+                            System.out.println("> Pour les abonnées :");
+                            System.out.println("    - si vous EMMENEZ des vélos dans d'AUTRES STATIONS vous aurez une PROMOTION");
+                        }else{
+                            System.out.println("> Pour les abonnées :");
+                            System.out.println("    - pas de prime");
+                        }
+                        System.out.println(">");
+
+
+                        //affiche etat des bornes
+                        System.out.println("> Etat des bornes :");
+                        s.getContient().forEach(bornette -> {
+                                    if(bornette.estPresent()) {
+                                        if(bornette.getPropose()==null){
+                                            System.out.println("    - B n°"+bornette.getNumeroBorn()+" Vide pour le moment");
+                                            System.out.println("        - etat : "+bornette.getEtat());
+                                        }
+                                        else if(bornette.getPropose().getEtat().equals(Etat.OK) ){
+                                            System.out.println("    - B n°"+bornette.getNumeroBorn());
+                                            System.out.println("        - etat : "+bornette.getEtat());
+                                            System.out.println("        - place : vélo "+ bornette.getPropose().getModele()+" disponible");
+                                        }else {
+                                            System.out.println("    - B n°"+bornette.getNumeroBorn());
+                                            System.out.println("        - etat : "+bornette.getEtat());
+                                            System.out.println("        - place : vélo "+ bornette.getPropose().getModele()+" en panne");
+                                        }
+                                    }else {
+                                        System.out.println("    - B n°" + bornette.getNumeroBorn());
+                                        System.out.println("        - etat : "+ bornette.getEtat());
+                                        System.out.println("        - place : vide ");
+                                    }
+                                }
+                        );
+
+                    }
                     break;
 
                 // S'abonner
