@@ -448,31 +448,56 @@ public class ProjetSpringApplication {
                                             System.out.println("> Entrez le numero du velo : ");
                                             long numVelo = scanner.nextInt();
                                             Velo veloSelected = veloRepository.findById(numVelo);
-                                            Bornette bornetteVeloLoue = bornetteRepository.findByIdVelo(numVelo);
-                                            bornetteVeloLoue.setPropose(null);
-                                            bornetteRepository.saveBornette(bornetteVeloLoue);
 
-                                            // Ajout location dans la bd
-                                            Location location = new Location();
 
-                                            //On set la prime si VPLUS
-                                            if (stationSelected.getStatus().equals(VMOINS)) {
-                                                System.out.println("Bravo vous contribuez à la mission de régulation citoyen");
-                                                System.out.println("> Vous serez deduis de 10% lors du trajet");
-                                                location.setPrime(true);
+                                            //demande etat velo
+                                            System.out.println("> Veuillez informer l'etat du vélo (OK/HS):");
+                                            String etatVelo = scanner.next();
+
+                                            switch (etatVelo) {
+                                                case "OK":
+                                                    veloSelected.setEtat(Etat.OK);
+                                                    System.out.println("> Etat vélo modifié");
+                                                    veloRepository.saveVelo(veloSelected);
+
+
+                                                    Bornette bornetteVeloLoue = bornetteRepository.findByIdVelo(numVelo);
+                                                    bornetteVeloLoue.setPropose(null);
+                                                    bornetteRepository.saveBornette(bornetteVeloLoue);
+
+                                                    // Ajout location dans la bd
+                                                    Location location = new Location();
+
+                                                    //On set la prime si VPLUS
+                                                    if (stationSelected.getStatus().equals(VMOINS)) {
+                                                        System.out.println("Bravo vous contribuez à la mission de régulation citoyen");
+                                                        System.out.println("> Vous serez deduis de 10% lors du trajet");
+                                                        location.setPrime(true);
+                                                    }
+
+                                                    //MAJ de la BD
+                                                    Date today = Calendar.getInstance().getTime();
+                                                    location.setDateLocation(today);
+                                                    location.setNumeroClient(abonneSelected.getCodeSecret());
+                                                    veloSelected.setLocation(location);
+                                                    abonneSelected.addLoue(location);
+                                                    location.setVelos(veloSelected);
+                                                    locationRepository.saveLocation(location);
+                                                    abonneRepository.saveAbonne(abonneSelected);
+                                                    System.out.println("> Vélo loué");
+                                                    Thread.sleep(3000);
+                                                    break;
+
+                                                case "HS":
+                                                    veloSelected.setEtat(Etat.HS);
+                                                    System.out.println("> Annulation location veuillez empruntez un autre vélo");
+                                                    veloRepository.saveVelo(veloSelected);
+                                                    break;
+
+                                                default:
+                                                    System.out.println("> Annulation signalement");
+                                                    break;
                                             }
-
-                                            //MAJ de la BD
-                                            Date today = Calendar.getInstance().getTime();
-                                            location.setDateLocation(today);
-                                            location.setNumeroClient(abonneSelected.getCodeSecret());
-                                            veloSelected.setLocation(location);
-                                            abonneSelected.addLoue(location);
-                                            location.setVelos(veloSelected);
-                                            locationRepository.saveLocation(location);
-                                            abonneRepository.saveAbonne(abonneSelected);
-                                            System.out.println("> Vélo loué");
-                                            Thread.sleep(3000);
                                         }
                                         else {
                                             System.out.println("> Aucun vélo disponible : ");
@@ -637,13 +662,13 @@ public class ProjetSpringApplication {
                                             Velo velo = veloRepository.findById(location.get(locationSelected).getVelos().get(0).getNumeroVelo());
                                             switch (etatVelo) {
                                                 case "OK":
-                                                    velo.setEtat(Etat.HS);
+                                                    velo.setEtat(Etat.OK);
                                                     System.out.println("> Etat vélo modifié");
                                                     veloRepository.saveVelo(velo);
                                                     break;
 
                                                 case "HS":
-                                                    velo.setEtat(Etat.OK);
+                                                    velo.setEtat(Etat.HS);
                                                     System.out.println("> Etat vélo modifié");
                                                     veloRepository.saveVelo(velo);
                                                     break;
@@ -790,13 +815,13 @@ public class ProjetSpringApplication {
 
                                 switch (etatVelo) {
                                     case "OK":
-                                        velo.setEtat(Etat.HS);
+                                        velo.setEtat(Etat.OK);
                                         System.out.println("> Etat vélo modifié");
                                         veloRepository.saveVelo(velo);
                                         break;
                                 
                                     case "HS":
-                                        velo.setEtat(Etat.OK);
+                                        velo.setEtat(Etat.HS);
                                         System.out.println("> Etat vélo modifié");
                                         veloRepository.saveVelo(velo);
                                         break;
