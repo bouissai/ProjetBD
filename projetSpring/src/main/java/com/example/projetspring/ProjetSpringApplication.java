@@ -340,7 +340,9 @@ public class ProjetSpringApplication {
                             System.out.println("    - pas de prime");
                         }                      
                         System.out.println(">");
-                        
+
+
+                        //affiche etat des bornes
                         System.out.println("> Etat des bornes :");
                         stationSelected.getContient().forEach(bornette -> {
                                 if(bornette.estPresent()) {
@@ -364,6 +366,8 @@ public class ProjetSpringApplication {
                                 }
                             }
                         );
+
+                        //affiche menu
                         System.out.println(">");
                         System.out.println("> Que voulez-vous faire?");
                         System.out.println("(1) - Emprunter un ou plusieurs vélos");
@@ -374,11 +378,14 @@ public class ProjetSpringApplication {
                         reponse2 = scanner.next();
 
                         switch (reponse2) {
+
                             ////////////////////////////
                             ///// MENNU EMPRUNTER /////
                             //////////////////////////
                             case "1":
+
                                 System.out.println("\n> Emprunter \n");
+
                                 // Demande si abonné
                                 System.out.println("> Etes-vous abonné a notre service ?(oui/non) ");
                                 String repAbonnement = scanner.next();
@@ -387,10 +394,12 @@ public class ProjetSpringApplication {
                                 /// Cas  abonné   ///
                                 ////////////////////
                                 if(repAbonnement.equals("oui")) {
+
                                     // Demande num abonne
                                     System.out.println("> Veuillez saisir votre numero client : Vous avez 3 tentatives");
                                     Long numClient = scanner.nextLong();
                                     Abonne abonneSelected = abonneRepository.findById(numClient);
+
                                     int compteur_erreur = 1;
                                     while (abonneSelected == null) {
                                         if (compteur_erreur == 3) {
@@ -399,28 +408,32 @@ public class ProjetSpringApplication {
                                             repAbonnement = "non";
                                             break;
                                         }
-                                        System.out.println("Pas le bon numéro de client , ressayer svp ");
-                                        System.out.println("Nombre de tentatives " + (3 - compteur_erreur));
+                                        System.out.println("> Pas le bon numéro de client , ressayer svp ");
+                                        System.out.println("> Nombre de tentatives " + (3 - compteur_erreur));
                                         numClient = scanner.nextLong();
                                         abonneSelected = abonneRepository.findById(numClient);
 
                                         compteur_erreur++;
                                     }
+
                                     //Connexion n'est pas reusite
                                     if (compteur_erreur == 3) {
                                         break;
                                     }
                                     System.out.println("> Connexion réussite");
-                                    System.out.println("Bonjour " + abonneSelected.getPrenom() + " " + abonneSelected.getNom());
+                                    System.out.println("> Bonjour " + abonneSelected.getPrenom() + " " + abonneSelected.getNom()+"\n");
 
+                                    //verifie que l'abonne a pas deja des locations en cours
                                     List<Location> locs = clientRepository.findLocationByClient(numClient);
                                     if (locs.size()>0) {//abonneSelected.getLoue().size() > 0
                                         System.out.println("Vous pouvez pas emprunter de velos \n" +
                                                 "Vous devez rendre votre location en cours");
                                         Thread.sleep(3000);
                                     }else{
+
                                         // Verifie si y a des velo dispo
                                         if (stationRepository.getNombreVeloOKByStation(stationSelected) != 0) {
+
                                             // Affichage vélos dispo
                                             System.out.println("> Voici les vélos disponibles : ");
                                             stationSelected.getContient().forEach(bornette -> {
@@ -428,6 +441,7 @@ public class ProjetSpringApplication {
                                                             System.out.println("(" + bornette.getPropose().getNumeroVelo() + ")  - vélo " + bornette.getPropose().getModele() + " (à la bornette n°" + bornette.getNumeroBorn() + ")");
                                                         }
                                                     }
+
                                             );
 
                                             //demander quel velo il veut
@@ -447,6 +461,8 @@ public class ProjetSpringApplication {
                                                 System.out.println("> Vous serez deduis de 10% lors du trajet");
                                                 location.setPrime(true);
                                             }
+
+                                            //MAJ de la BD
                                             Date today = Calendar.getInstance().getTime();
                                             location.setDateLocation(today);
                                             location.setNumeroClient(abonneSelected.getCodeSecret());
@@ -464,10 +480,12 @@ public class ProjetSpringApplication {
                                         }
                                     }
                                 }
+
                                 //////////////////////
                                 /// Cas non abonné //
                                 ////////////////////
                                 else if(repAbonnement.equals("non")) {
+
                                     // Demande num CB
                                     System.out.println("> Veuillez saisir le numero de votre CB :");
                                     int numCarte = scanner.nextInt();
@@ -479,6 +497,7 @@ public class ProjetSpringApplication {
 
                                     // Verifie si y a des velo dispo
                                     if(stationRepository.getNombreVeloOKByStation(stationSelected)!=0) {
+
                                         // Affichage vélos dispo
                                         System.out.println("> Voici les vélos disponibles : ");
                                         stationSelected.getContient().forEach(bornette -> {
@@ -491,26 +510,48 @@ public class ProjetSpringApplication {
                                         //demander quel velos il veut
                                         System.out.println("> Entrez le numero du velo : ");
                                         long numVelo = scanner.nextInt();
-                                        Velo veloSelected = veloRepository.findById(numVelo);
-                                        Bornette bornetteVeloLoue = bornetteRepository.findByIdVelo(numVelo);
-                                        bornetteVeloLoue.setPropose(null);
-                                        bornetteRepository.saveBornette(bornetteVeloLoue);
 
-                                        // Ajout location dans la bd
+                                        //DEMANDE ETAT VELO
+                                        System.out.println("> Veuillez informer l'etat du vélo (OK/HS):");
+                                        String etatVelo = scanner.next();
+                                        Velo velo = veloRepository.findById(numVelo);
+                                        switch (etatVelo) {
+                                            case "OK":
+                                                velo.setEtat(Etat.OK);
+                                                veloRepository.saveVelo(velo);
 
-                                        Location location = new Location();
-                                        location.setNumeroClient( nonAbonneSelected.getCodeSecret() );
-                                        Date today = Calendar.getInstance().getTime();
-                                        location.setDateLocation(today);
-                                        veloSelected.setLocation(location);
-                                        location.setVelos(veloSelected);
-                                        nonAbonneSelected.addLoue(location);
 
-                                        locationRepository.saveLocation(location);
-                                        nonAbonneRepository.save( nonAbonneSelected, nonAbonneSelected.getNumeroCB());
-                                        System.out.println("> Vélo loué");
-                                        System.out.println("Retenez votre code pour rendre le vélo à la fin : "+nonAbonneSelected.getCodeSecret()) ;
+                                                Velo veloSelected = veloRepository.findById(numVelo);
+                                                Bornette bornetteVeloLoue = bornetteRepository.findByIdVelo(numVelo);
+                                                bornetteVeloLoue.setPropose(null);
+                                                bornetteRepository.saveBornette(bornetteVeloLoue);
 
+                                                // Ajout location dans la bd et MAJ BD
+                                                Location location = new Location();
+                                                location.setNumeroClient( nonAbonneSelected.getCodeSecret() );
+                                                Date today = Calendar.getInstance().getTime();
+                                                location.setDateLocation(today);
+                                                veloSelected.setLocation(location);
+                                                location.setVelos(veloSelected);
+                                                nonAbonneSelected.addLoue(location);
+                                                locationRepository.saveLocation(location);
+                                                nonAbonneRepository.save( nonAbonneSelected, nonAbonneSelected.getNumeroCB());
+
+                                                System.out.println("> Vélo loué");
+                                                System.out.println("Retenez votre code pour rendre le vélo à la fin : "+nonAbonneSelected.getCodeSecret()) ;
+
+                                                break;
+
+                                            case "HS":
+                                                velo.setEtat(Etat.HS);
+                                                System.out.println("> Annulation location veuillez prendre un autre velo");
+                                                veloRepository.saveVelo(velo);
+                                                break;
+
+                                            default:
+                                                System.out.println("> Annulation signalement");
+                                                break;
+                                        }
                                         Thread.sleep(3000);
                                     }
                                     else{
@@ -590,6 +631,28 @@ public class ProjetSpringApplication {
                                             System.out.println("> Choisisez une borne parmis les bornes ci-dessus");
                                             long borneSelected = scanner.nextLong();
 
+                                            //DEMANDE ETAT VELO
+                                            System.out.println("> Veuillez informer l'etat du vélo (OK/HS):");
+                                            String etatVelo = scanner.next();
+                                            Velo velo = veloRepository.findById(location.get(locationSelected).getVelos().get(0).getNumeroVelo());
+                                            switch (etatVelo) {
+                                                case "OK":
+                                                    velo.setEtat(Etat.HS);
+                                                    System.out.println("> Etat vélo modifié");
+                                                    veloRepository.saveVelo(velo);
+                                                    break;
+
+                                                case "HS":
+                                                    velo.setEtat(Etat.OK);
+                                                    System.out.println("> Etat vélo modifié");
+                                                    veloRepository.saveVelo(velo);
+                                                    break;
+
+                                                default:
+                                                    System.out.println("> Annulation signalement");
+                                                    break;
+                                            }
+
                                             //Calcul du prix de la location
                                             Date now = new Date();
                                             var x = now;
@@ -651,6 +714,31 @@ public class ProjetSpringApplication {
                                             }
                                             System.out.println("> Choisisez une borne parmis les bornes ci-dessus");
                                             long borneSelected = scanner.nextLong();
+
+
+                                            //DEMANDE ETAT VELO
+                                            System.out.println("> Veuillez informer l'etat du vélo (OK/HS):");
+                                            String etatVelo = scanner.next();
+                                            Velo velo = veloRepository.findById(location.get(0).getVelos().get(0).getNumeroVelo());
+                                            switch (etatVelo) {
+                                                case "OK":
+                                                    velo.setEtat(Etat.HS);
+                                                    System.out.println("> Etat vélo modifié");
+                                                    veloRepository.saveVelo(velo);
+                                                    break;
+
+                                                case "HS":
+                                                    velo.setEtat(Etat.OK);
+                                                    System.out.println("> Etat vélo modifié");
+                                                    veloRepository.saveVelo(velo);
+                                                    break;
+
+                                                default:
+                                                    System.out.println("> Annulation signalement");
+                                                    break;
+                                            }
+
+
                                             //Calcul du prix de la location
                                             Date now = new Date();
                                             //default time zone
@@ -731,6 +819,7 @@ public class ProjetSpringApplication {
 
                 // Voir etat de toutes les stations
                 case "2":
+
                     break;
 
                 // S'abonner
@@ -772,7 +861,7 @@ public class ProjetSpringApplication {
                     abonneRepository.saveAbonne(abonneRegistered);
 
                     System.out.println("> Retenez bien votre n°client : "+ abonneRegistered.getCodeSecret());
-
+                    Thread.sleep(5000);
                     break;
 
                 case "4":
