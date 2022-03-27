@@ -15,7 +15,7 @@ public abstract class Client {
     private int numeroCB;
     @OneToMany
     private List<Location> loue = new ArrayList<Location>();
-
+    private boolean locationEnCours = false ;
     public List<Location> getLoue() {
         return loue;
     }

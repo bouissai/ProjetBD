@@ -1,6 +1,8 @@
 package com.example.projetspring;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class Location {
     private Date dateRendu ;
 
     @OneToMany
-    private List<Velo> Velos ;
+    private List<Velo> Velos = new ArrayList<Velo>() ;
     private double prixLoc;
     private boolean prime=false;
     private Long numeroClient;
@@ -75,6 +77,10 @@ public class Location {
 
     public List<Velo> getVelos() {
         return Velos;
+    }
+
+    public void setVelos(Velo velo) {
+        this.Velos.add(velo);
     }
 
     @Override
