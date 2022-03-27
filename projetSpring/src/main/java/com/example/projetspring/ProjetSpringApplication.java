@@ -324,7 +324,6 @@ public class ProjetSpringApplication {
                         System.out.println("    - adresse : "+stationSelected.getAdresse());
                         System.out.println("    - nombre de vélos disponibles : "+stationRepository.getNombreVeloOKByStation(stationSelected));
                         System.out.println("    - nombre de vélos endommagés : "+stationRepository.getNombreVeloEndommageByStation(stationSelected));
-
                         System.out.println("    - nombre de places vides : "+(stationRepository.getNombrePlaceLibreParBornette(stationSelected)));
                         System.out.println("    - statut : "+stationSelected.getStatus());
                         System.out.println(">");
