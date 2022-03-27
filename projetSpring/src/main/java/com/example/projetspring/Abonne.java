@@ -4,7 +4,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.util.Date;
-@Entity(name="Abonne")
+@Entity
 @DiscriminatorValue("Oui")
 public class Abonne extends Client{
 
@@ -15,14 +15,9 @@ public class Abonne extends Client{
     private String adresse ;
     private LocalDate dateAbonnement ;
 
-    Abonne(int numeroCB){
-        super(numeroCB);
-    }
-
     public Abonne() {
         super();
     }
-
 
     public String getNom() {
         return nom;

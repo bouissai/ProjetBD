@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity(name = "Station")
+@Entity
 @NamedQueries(
         @NamedQuery( name = "get-all-stations" , query="SELECT s from Station s"
 )

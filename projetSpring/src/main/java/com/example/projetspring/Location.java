@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Entity(name = "Location")
+@Entity
 @NamedQueries(
         @NamedQuery( name = "get-all-locations" , query="SELECT s from Location s"
         )
@@ -18,10 +18,8 @@ public class Location {
     @Column
     private Date dateRendu ;
 
-
-    @OneToMany(mappedBy = "location")
+    @OneToMany
     private List<Velo> Velos ;
-
     private double prixLoc;
     private boolean prime=false;
     private Long numeroClient;
@@ -49,11 +47,6 @@ public class Location {
         this.prime = prime;
     }
 
-    /*
-    public void setDateRendu(Date dateRendu) {
-        this.dateRendu = dateRendu;
-    }*/
-
     public Long getNumeroClient() {
         return numeroClient;
     }
@@ -65,17 +58,23 @@ public class Location {
     public void setDateRendu(Date dateRendu) {
         double prixLocation = 0;
         double heureLocation = Math. floor(( dateRendu.getTime() - this.dateLocation.getTime()) / (3.6*(Math.pow(10,6))))+1 ;
-
         for (Velo v: this.Velos) {
             prixLocation += prixLocation + (v.getPrix() * heureLocation);
         }
-
         this.prixLoc = prixLocation;
         this.dateRendu = dateRendu;
     }
 
+    public void setPrixLoc(double prixLoc) {
+        this.prixLoc = prixLoc;
+    }
+
     public double getPrixLoc() {
         return prixLoc;
+    }
+
+    public List<Velo> getVelos() {
+        return Velos;
     }
 
     @Override

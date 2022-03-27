@@ -5,17 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-@Entity(name="NonAbonne")
+@Entity
 @DiscriminatorValue("Non")
 @NamedQueries(
         @NamedQuery( name = "get-all-nonAbonne" , query="SELECT n from NonAbonne n"
         )
 )
-public class NonAbonne extends Client{
-
-        NonAbonne(int numeroCB){
-                super(numeroCB);
-        }
-
-
-}
+public class NonAbonne extends Client{}

@@ -24,8 +24,6 @@ public class Bornette {
         setEtat(Etat.OK);
     }
 
-
-
     public Etat getEtat() {
         return etat;
     }
@@ -39,7 +37,6 @@ public class Bornette {
     }
 
     public void setPropose(Velo velo) {
-
         if(velo == null){
             this.Propose = null;
             setEstPresent(false);

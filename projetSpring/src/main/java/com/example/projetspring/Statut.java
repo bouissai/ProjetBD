@@ -4,5 +4,4 @@ public enum Statut {
     VPLUS,
     VMOINS,
     VNUL
-
 }

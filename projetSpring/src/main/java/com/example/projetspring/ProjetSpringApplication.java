@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 import static com.example.projetspring.Statut.*;
@@ -457,7 +458,7 @@ public class ProjetSpringApplication {
                                             location.setDateLocation(today);
                                             location.setNumeroClient(abonneSelected.getCodeSecret());
                                             veloSelected.setLocation(location);
-                                            abonneSelected.setLoue(location);
+                                            abonneSelected.addLoue(location);
 
                                             locationRepository.saveLocation(location);
                                             abonneRepository.saveAbonne(abonneSelected);
@@ -479,7 +480,8 @@ public class ProjetSpringApplication {
                                     int numCarte = scanner.nextInt();
 
                                     // Cree un nonAbonne
-                                    Client nonAbonneSelected = new NonAbonne(numCarte);
+                                    Client nonAbonneSelected = new NonAbonne();
+                                    nonAbonneSelected.setNumeroCB(numCarte);
                                     System.out.println("> Carte enregistrée");
 
                                     // Verifie si y a des velo dispo
@@ -508,7 +510,7 @@ public class ProjetSpringApplication {
                                         Date today = Calendar.getInstance().getTime();
                                         location.setDateLocation(today);
                                         veloSelected.setLocation(location);
-                                        nonAbonneSelected.setLoue(location);
+                                        nonAbonneSelected.addLoue(location);
 
                                         locationRepository.saveLocation(location);
                                         nonAbonneRepository.save( nonAbonneSelected, nonAbonneSelected.getNumeroCB());
@@ -556,38 +558,80 @@ public class ProjetSpringApplication {
 
                                 System.out.println("\n> Rendre \n");
 
-                                boolean prime = false ; //Si statut VPLUS alors prime = true
-
-                                long codeStation = scanner.nextInt();
-
+                                // - verifie qu'il ya de la place  dans la sation
                                 if(stationRepository.getNombrePlaceLibreParBornette(stationSelected) == 0){
                                     System.out.println("La station est pleine , vous pouvez pas rendre le vélo ici");
                                 }
+                                else {
+                                    //Demande Client son code secret
+                                    System.out.println("> Veuillez saisir votre code secret :");
+                                    long codeClient = scanner.nextInt();
+                                    // Verification si client abonné ou non
+                                    if(abonneRepository.findById(codeClient)!=null){ // Cas abonné
+                                        // Récupère location client
+                                        List<Location> locs = clientRepository.findLocationByClient(codeClient);
+                                        for (Location l :locs) {
+                                            System.out.println(l.getId());
+                                        }
+                                        // Si on le client n'a pas de location on le sort
+                                        if(locs.size()>1){
+                                            for (Bornette b : stationSelected.getContient()) {
+                                                if(!b.estPresent()){
+                                                    System.out.println("(" + b.getNumeroBorn() + ")  - Borne libre ");
+                                                }
+                                            }
+                                            System.out.println("> Choisisez une borne parmis les bornes ci-dessus");
+                                            long borneSelected = scanner.nextLong();
+                                            //Calcul du prix de la location
+                                            LocalDate now = LocalDate.now();
+                                            //default time zone
+                                            ZoneId defaultZoneId = ZoneId.systemDefault();
+                                            locs.get(1).setDateRendu(Date.from(now.atStartOfDay(defaultZoneId).toInstant()));
+                                            // Si la location à une prime on active la reduction
+                                            if((locs.get(1).isPrime())||(stationSelected.getStatus().equals(VPLUS))){
+                                                double prixReduc = locs.get(1).getPrixLoc()*0.9;
+                                                locs.get(1).setPrixLoc(prixReduc);
+                                                System.out.println("> Vous avez été deduis de 10% du prix intial grâce à vos missions de bon citoyens !");
+                                            }
+                                            //MAJ BORNETTE AVEC AJOUT VELO DANS LA BORNETTE CHOISIS
+                                            Velo veloRendu = locs.get(1).getVelos().get(1); // recupere velo emprunter
+                                            Bornette bornetteRendu = bornetteRepository.findById(borneSelected);
+                                            bornetteRendu.setPropose(veloRendu);
+                                            bornetteRepository.saveBornette(bornetteRendu);
+                                            // MAJ STATION BORNETTE PRESENTE
+                                            if(stationRepository.getNombrePlaceLibreParBornette(stationSelected)<=1) {
+                                                stationSelected.setStatus(VMOINS);
+                                            }
+                                            else if(stationRepository.getNombrePlaceLibreParBornette(stationSelected)>=4){
+                                                stationSelected.setStatus(VPLUS);
+                                            }
+                                            else {
+                                                stationSelected.setStatus(VNUL);
+                                            }
+                                            locationRepository.saveLocation(locs.get(1)); // enrengistre dans la bd la date de rendu
 
-                                //TODO calculer prime + rendu velo avec maj bornette place vide diminuer et dispo ajouter
-                                System.out.println("> Veuillez saisir votre code secret :");
-                                long codeClient = scanner.nextInt();
+                                            System.out.println("Voici le montant de votre location -> "+locs.get(1).getPrixLoc());
+                                        }
+                                        else{
+                                            System.out.println("> Vous n'avez pas de location.\n> Sortie.");
+                                        }
+                                    }
+                                    else if(clientRepository.findById(codeClient)!=null){ // Cas non abonné
+                                        // Récupère location client
+                                        List<Location> locs = clientRepository.findLocationByClient(codeClient);
+                                        // Si on le client n'a pas de location on le sort
+                                        if(locs.size()>1){
 
-                                Client client = clientRepository.findById(codeClient);
-                                List<Location> locs = clientRepository.findLocationByClient(codeClient);
-                                for( Location l : locs) {
-                                    System.out.println(l.toString());
+                                        }
+                                        else{
+                                            System.out.println("> Vous n'avez pas de location.\n> Sortie.");
+                                        }
+                                    }
+                                    else{
+                                        System.out.println("> Code secret invalide");
+                                    }
+
                                 }
-
-                                System.out.println("> Veuillez choisir la location que vous voulez deposer : ");
-                                long idLoc = scanner.nextInt();
-                                Location locationSelected = locationRepository.findById(idLoc);
-                                Date now = Calendar.getInstance().getTime();
-                                locationSelected.setDateRendu(now);
-
-                                if(prime){
-                                System.out.println("Vous dever payer "+locationSelected.getPrixLoc()*0.7*0.9 );
-                                }
-                                System.out.println("> Vous avez payé :"+locationSelected.getPrixLoc());
-
-                                //save location dans la bd
-                                locationRepository.saveLocation(locationSelected);
-
                                 break;
                         
                             //Signaler
@@ -619,7 +663,6 @@ public class ProjetSpringApplication {
                                         break;
                                 }
                                 break;
-
                             //Quitter
                             case "4":
                                 d2=false;
@@ -644,7 +687,7 @@ public class ProjetSpringApplication {
                     System.out.println("> prenom :");
                     String prenom = scanner.next();
                     System.out.println("> adresse : ");
-                    String adresse = scanner.nextLine();
+                    String adresse = scanner.next();
                     System.out.println("> date de naissance sous format yyyy-mm-dd");
                     String dateNaisToconvert  = scanner.next();
                     LocalDate dateNais = LocalDate.parse(dateNaisToconvert);
@@ -660,8 +703,8 @@ public class ProjetSpringApplication {
                     int numeroCB  = scanner.nextInt();
 
                     //cree un nouvel abo
-                    Abonne abonneRegistered = new Abonne(numeroCB);
-
+                    Abonne abonneRegistered = new Abonne();
+                    abonneRegistered.setNumeroCB(numeroCB);
                     //set les infos dans le nouvel objet abo
                     abonneRegistered.setNom(nom);
                     abonneRegistered.setPrenom(prenom);
@@ -672,6 +715,8 @@ public class ProjetSpringApplication {
                     
                     //save l'abonné
                     abonneRepository.saveAbonne(abonneRegistered);
+
+                    System.out.println("> Retenez bien votre n°client : "+ abonneRegistered.getCodeSecret());
 
                     //cree un nouveau client
                         //long codeSecret = abonneRegistered.getCodeSecret();

@@ -3,7 +3,7 @@ package com.example.projetspring;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name ="Modele")
+@Entity
 public class Modele {
     @Id
     private Marque marque ;

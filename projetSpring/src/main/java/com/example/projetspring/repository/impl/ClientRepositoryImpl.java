@@ -42,11 +42,11 @@ public class ClientRepositoryImpl extends BaseRepositoryImpl implements ClientRe
         entityManager.getTransaction().commit();
         entityManager.detach(l);
         velo.setLocation(l);
-        client.setLoue(l);
+        client.addLoue(l);
     }*/
 
     public List<Location> findLocationByClient(long codeSecret){
-        final List<Location> locations = entityManager.createQuery("select c.loue from Client c join c.loue l  where l.dateRendu = null").getResultList();
+        final List<Location> locations = entityManager.createQuery("select c.loue from Client c join c.loue l  where c.codeSecret = ?1 and l.dateRendu = ?2").setParameter(1,codeSecret).setParameter(2,null).getResultList();
         return locations;
     }
 
