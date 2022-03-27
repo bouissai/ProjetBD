@@ -28,7 +28,7 @@ public class ClientRepositoryImpl extends BaseRepositoryImpl implements ClientRe
         entityManager.detach(c);
     }
 
-    public Client findById(int id) {
+    public Client findById(Long id) {
         return entityManager.find(Client.class, id);
     }
 
@@ -49,5 +49,6 @@ public class ClientRepositoryImpl extends BaseRepositoryImpl implements ClientRe
         final List<Location> locations = entityManager.createQuery("select c.loue from Client c join c.loue l  where l.dateRendu = null").getResultList();
         return locations;
     }
+
 
 }

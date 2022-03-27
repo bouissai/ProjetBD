@@ -30,6 +30,17 @@ public abstract class Client {
 
     }
 
+    public void setCodeSecret(long codeSecret) {
+        this.codeSecret = codeSecret;
+    }
+
+    public List<Location> getLoue() {
+        return loue;
+    }
+
+    public void setLoue(List<Location> loue) {
+        this.loue = loue;
+    }
 
     public void setLoue(Location location) {
         this.loue.add(location);
