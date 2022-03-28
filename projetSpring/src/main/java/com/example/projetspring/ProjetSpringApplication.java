@@ -600,6 +600,8 @@ public class ProjetSpringApplication {
                                     System.out.println("> Erreur identification ");
                                     Thread.sleep(3000);
                                 }
+
+                                d2=false;
                                 break;
 
                             // Rendre Velo emprunter
@@ -747,13 +749,13 @@ public class ProjetSpringApplication {
                                             Velo velo = veloRepository.findById(location.get(0).getVelos().get(0).getNumeroVelo());
                                             switch (etatVelo) {
                                                 case "OK":
-                                                    velo.setEtat(Etat.HS);
+                                                    velo.setEtat(Etat.OK);
                                                     System.out.println("> Etat vélo modifié");
                                                     veloRepository.saveVelo(velo);
                                                     break;
 
                                                 case "HS":
-                                                    velo.setEtat(Etat.OK);
+                                                    velo.setEtat(Etat.HS);
                                                     System.out.println("> Etat vélo modifié");
                                                     veloRepository.saveVelo(velo);
                                                     break;
@@ -800,6 +802,7 @@ public class ProjetSpringApplication {
                                     }
 
                                 }
+                                d2=false;
                                 break;
                         
                             //Signaler
@@ -830,6 +833,7 @@ public class ProjetSpringApplication {
                                         System.out.println("> Annulation signalement");
                                         break;
                                 }
+
                                 break;
                             //Quitter
                             case "4":
@@ -961,5 +965,4 @@ public class ProjetSpringApplication {
     }
 
 }
-
 
