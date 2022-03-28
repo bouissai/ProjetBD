@@ -12,10 +12,10 @@
         <class>com.example.projetspring.Abonne</class>
         <class>com.example.projetspring.NonAbonne</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/ilyassbouissa"/>
-           <property name="javax.persistence.jdbc.user" value="postgres" />
-            <property name="javax.persistence.jdbc.password" value="password" />
-            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@im2ag-oracle.e.ujf-grenoble.fr:1521:im2ag"/>
+           <property name="javax.persistence.jdbc.user" value="konushbb" />
+            <property name="javax.persistence.jdbc.password" value="363881569c" />
+            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
             <property name="hibernate.show_sql" value="true"/>
 
             <property name="hibernate.hbm2ddl.auto" value="create"/>
